@@ -6,3 +6,6 @@
 /web/prod
 /web/staging
 /tmp
+
+/src/ApiReference/assets/tmpl/tmpl/*.html
+/src/Guide/assets/*.html
