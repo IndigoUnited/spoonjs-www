@@ -1,26 +1,69 @@
 <h1>View</h1>
-
-<h2>view.render()</h2>
-
-<p>Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass. </p>
-
-<p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass. </p>
-
-<h2>view.clear()</h2>
-
-<p>Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass. </p>
-
-<p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass. </p>
-
-<h2>view.appendTo()</h2>
-
-<p>Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass. </p>
-
-<p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass. </p>
-
-<h2>view._link()</h2>
-
-<p>Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass. </p>
-
-<p>Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass. </p>
-
+<p>View abstract class.
+Extends Joint abstract class.</p>
+<h2>View()</h2>
+<p><code>constructor</code></p>
+<p><strong>Parameters</strong><br>element:Element (optional) - The DOM element for the view, defaults to document.body.</p>
+<h2>getElement()</h2>
+<p><code>public method</code> <em>getElement()</em></p>
+<p>Returns the view&#39;s element.</p>
+<p><strong>Returns</strong>
+Element - The view&#39;s element.</p>
+<h2>appendTo()</h2>
+<p><code>public method</code> <em>appendTo(target, [within])</em></p>
+<p>Convenience method to append the element&#39;s view to a target.
+The target can be another view, a DOM element or a CSS selector.
+If the target is another view, an additional selector can be passed to specify the element where it will get appended.</p>
+<p><strong>Parameters</strong>
+target:Element|String|View - The target.
+within:String (optional) - The selector in case the target is a view.</p>
+<p><strong>Returns</strong>
+View - The instance itself to allow chaining.</p>
+<h2>prependTo()</h2>
+<p><code>public method</code> <em>prependTo(target, [within])</em></p>
+<p>Convenience method to prepend the element&#39;s view to a target.
+The target can be another view, a DOM element or a CSS selector.
+If the target is another view, an additional selector can be passed to specify the element where it will get appended.</p>
+<p><strong>Parameters</strong>
+target:Element|String|View - The target.
+within:String (optional) - The selector in case the target is a view.</p>
+<p><strong>Returns</strong>
+View - The instance itself to allow chaining.</p>
+<h2>render()</h2>
+<p><code>public method</code> <em>render(data)</em></p>
+<p>Renders the declared template with the supplied data.
+Note that if this view is not yet linked to its parent, it will make the view listen to the declared DOM events, and also manage its descendants uplinked DOM events.</p>
+<p><strong>Parameters</strong>
+data:Object|Array (optional) - The data to pass to the template.</p>
+<p><strong>Returns</strong>
+View - The instance itself to allow chaining.</p>
+<h2>clear()</h2>
+<p><code>public method</code> <em>clear()</em></p>
+<p>Clears the view&#39;s element.
+Note that you must explicitly call unlisten() to remove the DOM event listeners.</p>
+<p><strong>Returns</strong>
+View - The instance itself to allow chaining.</p>
+<h2>_listen()</h2>
+<p><code>protected method</code> <em>_listen(events)</em></p>
+<p>Listen to events.</p>
+<p><strong>Parameters</strong>
+events:Object - An object with the events.</p>
+<p><strong>Returns</strong>
+Object - The same object.</p>
+<h2>_unlisten()</h2>
+<p><code>protected method</code> <em>_unlisten(events)</em></p>
+<p>Unlistens to events.</p>
+<p><strong>Parameters</strong>
+events:Object - An object with the events.</p>
+<p><strong>Returns</strong>
+Object - The same object.</p>
+<h2>_generateUrl()</h2>
+<p><code>protected method</code> <em>_generateUrl(events)</em></p>
+<p>Generates an URL.</p>
+<p><strong>Parameters</strong>
+state:String - The state name.
+params:Object (optional) - The state params.</p>
+<p><strong>Returns</strong>
+String - The generated URL.</p>
+<h2>License</h2>
+<p>Released under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>.</p>

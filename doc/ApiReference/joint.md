@@ -104,7 +104,3 @@ Joint - The instance itself to allow chaining.
 Method called after calling destroy().
 Subclasses should override this method to release additional resources.   
 The default implementation will also destroy any linked joints.
-
-## License
-
-Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).

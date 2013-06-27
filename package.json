@@ -3,13 +3,14 @@
   "version": "0.0.1",
   "devDependencies": {
     "mout": "~0.3.0",
-    "async": "~0.1.22",
-    "glob": "~3.1.14",
+    "async": "~0.2.9",
+    "glob": "~3.2.1",
     "express": "~3.0.3",
     "connect": "~2.7.2",
     "requirejs": "~2.1.2",
     "uglify-js": "~2.2.3",
     "clean-css": "~0.9.1",
-    "gzip-js": "~0.3.1"
+    "gzip-js": "~0.3.1",
+    "marked": "~0.2.9"
   }
 }

@@ -3,9 +3,9 @@
 Controller abstract class.
 Extends Joint abstract class.
 
-## API
 
-### getState()
+
+## getState()
 `public method` _getState()_
 
 Get the current state or null if none is set.
@@ -13,7 +13,23 @@ Get the current state or null if none is set.
 **Returns**   
 State - The state.
 
-### generateUrl()
+
+## setState()
+`public method` _setState([state], [params], [options])_
+
+Sets the current state.
+If the state is the same, nothing happens.
+
+**Parameters**:
+state:...mixed (optional) - The state name, the state parameter bag or a state instance.   
+params:Object (optional) - The state params to be used if the state is a string.   
+options:Object (optional) - The options.
+
+**Returns**   
+Controller - The instance itself to allow chaining.
+
+
+## generateUrl()
 `public method` _generateUrl(state, [params])_
 
 Generates an URL for a state.
@@ -24,31 +40,3 @@ params:Object (optional) - The state params.
 
 **Returns**   
 String - The generated URL.
-
-### setState()
-`public method` _setState([state], [params], [options])_
-
-Sets the current state.
-If the state is the same, nothing happens.
-
-**Parameters**   
-state:...mixed (optional) - The state name, the state parameter bag or a state instance.   
-params:Object (optional) - The state params to be used if the state is a string.   
-options:Object (optional) - The options.
-
-**Returns**   
-Controller - The instance itself to allow chaining.
-
-### _stateParamsRegExp
-`protected constant` __stateParamsRegExp_
-
-State parameters regular expression.
-
-### _relativeStateRegExp
-`protected constant` __relativeStateRegExp_
-
-Relative state regular expression.
-
-## License
-
-Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
