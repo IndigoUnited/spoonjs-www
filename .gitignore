@@ -7,5 +7,5 @@
 /web/staging
 /tmp
 
-/src/ApiReference/assets/tmpl/tmpl/*.html
-/src/Guide/assets/*.html
+/src/Content/ApiReference/assets/tmpl/*.html
+/src/Content/Guide/assets/tmpl/*.html
