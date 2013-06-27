@@ -2,11 +2,12 @@
 
 'use strict';
 
-var fs    = require('fs');
-var path  = require('path');
-var md    = require('marked');
-var glob  = require('glob');
-var async = require('async');
+var fs     = require('fs');
+var path   = require('path');
+var md     = require('marked');
+var glob   = require('glob');
+var async  = require('async');
+var mkdirp = require('mkdirp');
 
 module.exports = function (task) {
     task
@@ -35,18 +36,24 @@ module.exports = function (task) {
                 return next(err);
             }
 
-            async.forEach(files, function (file, next) {
-                fs.readFile(docsDir + '/' + file, function (err, contents) {
-                    var html;
+            mkdirp(templatesDir, function (err) {
+                if (err) {
+                    return next(err);
+                }
 
-                    if (err) {
-                        return next(err);
-                    }
+                async.forEach(files, function (file, next) {
+                    fs.readFile(docsDir + '/' + file, function (err, contents) {
+                        var html;
 
-                    html = md(contents.toString());
-                    fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html, next);
-                });
-            }, next);
+                        if (err) {
+                            return next(err);
+                        }
+
+                        html = md(contents.toString());
+                        fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html, next);
+                    });
+                }, next);
+            });
         });
     }, {
         description: 'Generate API Reference'
@@ -60,18 +67,24 @@ module.exports = function (task) {
                 return next(err);
             }
 
-            async.forEach(files, function (file, next) {
-                fs.readFile(docsDir + '/' + file, function (err, contents) {
-                    var html;
+            mkdirp(templatesDir, function (err) {
+                if (err) {
+                    return next(err);
+                }
 
-                    if (err) {
-                        return next(err);
-                    }
+                async.forEach(files, function (file, next) {
+                    fs.readFile(docsDir + '/' + file, function (err, contents) {
+                        var html;
 
-                    html = md(contents.toString());
-                    fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html, next);
-                });
-            }, next);
+                        if (err) {
+                            return next(err);
+                        }
+
+                        html = md(contents.toString());
+                        fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html, next);
+                    });
+                }, next);
+            });
         });
     }, {
         description: 'Generate Guide'
