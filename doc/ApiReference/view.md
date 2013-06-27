@@ -94,16 +94,3 @@ events:Object - An object with the events.
 
 **Returns**
 Object - The same object.
-
-
-## _generateUrl()
-`protected method` __generateUrl(events)_
-
-Generates an URL.
-
-**Parameters**
-state:String - The state name.
-params:Object (optional) - The state params.
-
-**Returns**
-String - The generated URL.

@@ -3,9 +3,8 @@
 Joint abstract class.
 A Joint represents a node in the hierarchy.
 
-## API
 
-### on()
+## on()
 `public method` _on(event, fn, [context])_
 
 Adds a listener for an upcast or broadcast event.
@@ -19,7 +18,8 @@ context:Object (optional) - The context to be used to call the handler, defaults
 **Returns**   
 Joint - The instance itself to allow chaining.
 
-### once()
+
+## once()
 `public method` _once(event, fn, [context])_
 
 Adds a one time listener for an upcast or broadcast event.
@@ -33,7 +33,8 @@ context:Object (optional) - The context to be used to call the handler, defaults
 **Returns**   
 Joint - The instance itself to allow chaining.
 
-### off()
+
+## off()
 `public method` _off(event, fn, [context])_
 
 Removes a previously added listener.
@@ -46,13 +47,15 @@ context:Object (optional) - The context passed to the on() method.
 **Returns**   
 Joint - The instance itself to allow chaining.
 
-### destroy()
+
+## destroy()
 `public method` _destroy()_
 
 Destroys the instance, releasing all of its resources.
 Note that all downlinks will also be destroyed.
 
-### _link()
+
+## _link()
 `protected method` __link(joint)_
 
 Creates a link between this joint and another one.
@@ -63,7 +66,8 @@ joint:Joint - Another joint to link to this one.
 **Returns**   
 Joint - The joint passed in as the argument.
 
-### _unlink()
+
+## _unlink()
 `protected method` __unlink(joint)_
 
 Removes a previously created link between a joint and another one.
@@ -74,7 +78,8 @@ joint:Joint - Another joint to link to this one.
 **Returns**   
 Joint - The instance itself to allow chaining.
 
-### _upcast()
+
+## _upcast()
 `protected method` __upcast(event, [args])_
 
 Fires an event upwards the chain.
@@ -86,7 +91,8 @@ args:...mixed (optional) - The arguments to pass along with the event.
 **Returns**   
 Joint - The instance itself to allow chaining.
 
-### _broadcast()
+
+## _broadcast()
 `protected method` __broadcast(event, [args])_
 
 Fires an event to all the joints.
@@ -98,7 +104,8 @@ args:...mixed (optional) - The arguments to pass along with the event.
 **Returns**   
 Joint - The instance itself to allow chaining.
 
-### _onDestroy()
+
+## _onDestroy()
 `protected method` __onDestroy()_
 
 Method called after calling destroy().

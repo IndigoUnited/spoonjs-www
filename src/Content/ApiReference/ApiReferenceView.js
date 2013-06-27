@@ -2,8 +2,9 @@ define([
     '../../Common/DocumentView',
     'text!./assets/tmpl/controller.html',
     'text!./assets/tmpl/view.html',
+    'text!./assets/tmpl/joint.html',
     'css!./assets/css/api_reference.css'
-], function (DocumentView, controllerTmpl, viewTmpl) {
+], function (DocumentView, controllerTmpl, viewTmpl, jointTmpl) {
 
     'use strict';
 
@@ -16,7 +17,7 @@ define([
          * {@inheritDoc}
          */
         render: function () {
-            this.setBlocks([controllerTmpl, viewTmpl]);
+            this.setBlocks([controllerTmpl, viewTmpl, jointTmpl]);
 
             return DocumentView.prototype.render.call(this);
         }
