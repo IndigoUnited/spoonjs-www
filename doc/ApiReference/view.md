@@ -1,14 +1,53 @@
 # View
 
-View abstract class.
-Extends Joint abstract class.
+Extends [Joint]() class.
 
-
-## View()
-`constructor`
+All views need an element to work on.   
+This element can be passed in the view constructor. If none is passed, one will generated according to the `_element` property.
 
 **Parameters**   
-element:Element (optional) - The DOM element for the view, defaults to document.body.
+element:Element (optional) - The DOM element for the view.
+
+
+## _element
+
+`protected property` _element
+
+A CSS selector used to build an element for the view in case one is not passed to the constructor.   
+Defaults to `div`.
+
+
+## _template
+
+`protected property` _template
+
+A function that generates an HTML string or an Element.   
+If set, the `render()` method will call this function with the supplied data.   
+Defaults to `null`.
+
+
+```js
+_template: Handlebars.compile('<div>{{name}}</div>')
+```
+
+
+## _events
+
+`protected property` _events
+
+An object where keys are event selectors and values the functions to run when the event occurs.
+
+```js
+_events: {
+    'click .delete': '_onDeleteClick',
+    'submit form': '_onSubmit',
+    'mouseenter .pic': function (event, element) {
+        // event is the jquery event
+        // element is the jquery wrapped element
+    }
+}
+```
+
 
 ## getElement()
 `public method` _getElement()_
@@ -26,9 +65,10 @@ Convenience method to append the element's view to a target.
 The target can be another view, a DOM element or a CSS selector.
 If the target is another view, an additional selector can be passed to specify the element where it will get appended.
 
-**Parameters**
-target:Element|String|View - The target.
-within:String (optional) - The selector in case the target is a view.
+**Parameters**:
+
+- target:Element|String|View - The target.
+- within:String (optional) - The selector in case the target is a view.
 
 **Returns**
 View - The instance itself to allow chaining.

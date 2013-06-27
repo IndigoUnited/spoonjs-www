@@ -1,0 +1,70 @@
+h1 {
+    font-size: 1.8em;
+    line-height: 0.8em;
+    margin-bottom: 0.8em;
+}
+
+h2 {
+    font-size: 1.4em;
+    line-height: 1em;
+    margin-bottom: 1em;
+}
+
+h3 {
+    font-size: 1.2em;
+    line-height: 1.09em;
+    margin-bottom: 1.09em;
+}
+
+h4 {
+    font-size: 1.1em;
+    line-height: 1.33em;
+    margin-bottom: 1.33em;
+}
+
+h5 {
+    font-size: 1.05em;
+    line-height: 1.33em;
+    margin-bottom: 1.33em;
+}
+
+h1, h2, h3, h4 {
+    color: #111;
+    font-weight: bold;
+}
+
+p {
+    margin-bottom: 1.5em;
+    line-height: 1.5em;
+}
+
+p code {
+    background: #efefef;
+    border: 1px solid #eaeaea;
+    font-family: monaco, monospace;
+    font-size: .75em;
+    padding: 2px 8px;
+    border-radius: 3px;
+}
+
+pre {
+    color: #353535;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 20px 0;
+    padding: 20px;
+    background: white;
+    border: 1px solid #e7e7e7;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 3px 0 #eee;
+    border-radius: 3px;
+}
+
+pre code {
+    font-family: monaco, monospace;
+    font-size: .8em;
+}
+
+strong {
+    color: #444;
+}

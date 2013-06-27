@@ -6,6 +6,7 @@ define([
     'mout/array/map',
     'text!./assets/tmpl/document.html',
     'text!./assets/tmpl/document_topics.html',
+    'css!./assets/css/general.css',
     'css!./assets/css/document.css',
     'jquery.scrollTo'
 ], function (View, $, doT, slugify, map, tmpl, topicsTmpl) {
@@ -44,7 +45,8 @@ define([
          * {@inheritDoc}
          */
         render: function () {
-            var x;
+            var x,
+                block;
 
             View.prototype.render.call(this);
 
@@ -53,7 +55,9 @@ define([
 
             // Render each block
             for (x = 0; x < this._blocks.length; x += 1) {
-                this._leftEl.append($(this._blocks[x]));
+                block = $('<section></section>');
+                block.append($(this._blocks[x]));
+                this._leftEl.append(block);
             }
 
             // Parse and render the topics
@@ -73,7 +77,8 @@ define([
          * @return {DocumentView} Chaining!
          */
         scrollTo: function (topic) {
-            $.scrollTo('.' + this._generateTopicClass(topic), 300, { offset: -100 });
+            console.log(this._generateTopicClass(topic))
+            $.scrollTo('.' + this._generateTopicClass(topic), 300, { offset: -70 });
 
             return this;
         },
@@ -130,6 +135,9 @@ define([
                     topics.push(name);
                     subtopics[name] = [];
                 } else {
+                    // Extract only the function name
+                    name = name.split('.');
+                    name = name[name.length - 1];
                     subtopics[currTopic].push(name);
                 }
 
@@ -137,7 +145,7 @@ define([
 
                 // Store information about the position
                 that._headings.push({
-                    top: $topicEl.offset().top - 100,
+                    top: $topicEl.offset().top - 80,
                     topic: name
                 });
             });

@@ -1,5 +1,5 @@
 .document {
-    margin: 100px 30px 0 30px;
+    margin: 100px 30px 0 80px;
 }
 
 .document .content-left {
@@ -52,4 +52,28 @@
 
 .document .content-right > ul li.active ul {
     display: block;
+}
+
+.document section {
+    margin-top: 100px;
+}
+
+.document section:first-child {
+    margin-top: 0;
+}
+
+.document h1 ~ h2 {
+    padding-top: 50px;
+    margin-top: 50px;
+    position: relative;
+}
+
+.document h1 ~ h2:before {
+    content: '';
+    background: url("../img/hr.png") top left no-repeat;
+    position: absolute;
+    top: 0;
+    height: 19px;
+    left: -70px;
+    right: 0;
 }

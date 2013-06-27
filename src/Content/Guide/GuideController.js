@@ -28,11 +28,9 @@ define([
 
         /**
          * Index state handler.
-         *
-         * @param {Object} state The state parameter bag
          */
-        _indexState: function (state) {
-            this._view.render();
+        _indexState: function () {
+            this._renderView();
         },
 
         /**
@@ -41,7 +39,18 @@ define([
          * @param {Object} state The state parameter bag
          */
         _topicState: function (state) {
+            this._renderView();
             this._view.scrollTo(state.name);
+        },
+
+        /**
+         * Renders the view once.
+         */
+        _renderView: function () {
+            if (!this._rendered) {
+                this._view.render();
+                this._rendered = true;
+            }
         }
     });
 });
