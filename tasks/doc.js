@@ -44,11 +44,36 @@ module.exports = function (task) {
                     }
 
                     html = md(contents.toString());
-                    fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html);
+                    fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html, next);
                 });
             }, next);
         });
     }, {
         description: 'Generate API Reference'
+    })
+    .do(function (options, ctx, next) {
+        var docsDir = __dirname + '/../doc/Guide',
+            templatesDir = __dirname + '/../src/Content/Guide/assets/tmpl';
+
+        glob('*.md', { cwd: docsDir }, function (err, files) {
+            if (err) {
+                return next(err);
+            }
+
+            async.forEach(files, function (file, next) {
+                fs.readFile(docsDir + '/' + file, function (err, contents) {
+                    var html;
+
+                    if (err) {
+                        return next(err);
+                    }
+
+                    html = md(contents.toString());
+                    fs.writeFile(templatesDir + '/' + path.basename(file, '.md') + '.html', html, next);
+                });
+            }, next);
+        });
+    }, {
+        description: 'Generate Guide'
     });
 };
