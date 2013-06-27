@@ -5,11 +5,12 @@ Extends [Joint]() class.
 All views need an element to work on.   
 This element can be passed in the view constructor. If none is passed, one will generated according to the `_element` property.
 
-**Parameters**   
-element:Element (optional) - The DOM element for the view.
+**Parameters**:
+
+- element:Element (optional) - The DOM element for the view.
 
 
-## _element
+## view._element
 
 `protected property` _element
 
@@ -17,7 +18,7 @@ A CSS selector used to build an element for the view in case one is not passed t
 Defaults to `div`.
 
 
-## _template
+## view._template
 
 `protected property` _template
 
@@ -31,7 +32,7 @@ _template: Handlebars.compile('<div>{{name}}</div>')
 ```
 
 
-## _events
+## view._events
 
 `protected property` _events
 
@@ -49,7 +50,7 @@ _events: {
 ```
 
 
-## getElement()
+## view.getElement()
 
 `public method` _getElement()_
 
@@ -59,7 +60,7 @@ Returns the view's element.
 Element - The view's element.
 
 
-## appendTo()
+## view.appendTo()
 
 `public method` _appendTo(target, [within])_
 
@@ -76,7 +77,7 @@ If the target is another view, an additional selector can be passed to specify t
 View - The instance itself to allow chaining.
 
 
-## prependTo()
+## view.prependTo()
 
 `public method` _prependTo(target, [within])_
 
@@ -93,7 +94,7 @@ If the target is another view, an additional selector can be passed to specify t
 View - The instance itself to allow chaining.
 
 
-## render()
+## view.render()
 
 `public method` _render(data)_
 
@@ -108,7 +109,7 @@ Note that if this view is not yet linked to its parent, it will make the view li
 View - The instance itself to allow chaining.
 
 
-## clear()
+## view.clear()
 
 `public method` _clear()_
 
@@ -119,7 +120,7 @@ Note that you must explicitly call unlisten() to remove the DOM event listeners.
 View - The instance itself to allow chaining.
 
 
-## _listen()
+## view._listen()
 
 `protected method` __listen(events)_
 
@@ -133,7 +134,7 @@ Listen to events.
 Object - The same object.
 
 
-## _unlisten()
+## view._unlisten()
 
 `protected method` __unlisten(events)_
 
