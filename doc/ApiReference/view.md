@@ -50,6 +50,7 @@ _events: {
 
 
 ## getElement()
+
 `public method` _getElement()_
 
 Returns the view's element.
@@ -59,6 +60,7 @@ Element - The view's element.
 
 
 ## appendTo()
+
 `public method` _appendTo(target, [within])_
 
 Convenience method to append the element's view to a target.
@@ -75,34 +77,39 @@ View - The instance itself to allow chaining.
 
 
 ## prependTo()
+
 `public method` _prependTo(target, [within])_
 
 Convenience method to prepend the element's view to a target.
 The target can be another view, a DOM element or a CSS selector.
 If the target is another view, an additional selector can be passed to specify the element where it will get appended.
 
-**Parameters**
-target:Element|String|View - The target.
-within:String (optional) - The selector in case the target is a view.
+**Parameters**:
+
+ - target:Element|String|View - The target.
+- within:String (optional) - The selector in case the target is a view.
 
 **Returns**
 View - The instance itself to allow chaining.
 
 
 ## render()
+
 `public method` _render(data)_
 
 Renders the declared template with the supplied data.
 Note that if this view is not yet linked to its parent, it will make the view listen to the declared DOM events, and also manage its descendants uplinked DOM events.
 
-**Parameters**
-data:Object|Array (optional) - The data to pass to the template.
+**Parameters**:
+
+- data:Object|Array (optional) - The data to pass to the template.
 
 **Returns**
 View - The instance itself to allow chaining.
 
 
 ## clear()
+
 `public method` _clear()_
 
 Clears the view's element.
@@ -113,24 +120,28 @@ View - The instance itself to allow chaining.
 
 
 ## _listen()
+
 `protected method` __listen(events)_
 
 Listen to events.
 
-**Parameters**
-events:Object - An object with the events.
+**Parameters**:
+
+- events:Object - An object with the events.
 
 **Returns**
 Object - The same object.
 
 
 ## _unlisten()
+
 `protected method` __unlisten(events)_
 
 Unlistens to events.
 
-**Parameters**
-events:Object - An object with the events.
+**Parameters**:
+
+- events:Object - An object with the events.
 
 **Returns**
 Object - The same object.
