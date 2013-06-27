@@ -1,0 +1,16 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "dependencies": {
+    "spoonjs": "*",
+    "requirejs": "~2.1",
+    "requirejs-text": "~2.0",
+    "require-css": "*",
+    "almond": "~0.2",
+    "jquery": "~1.10",
+    "mout": "~0.6.0",
+    "normalize-css": "~2.1",
+    "doT": "~0.2",
+    "jquery.scrollTo": "~1.4"
+  }
+}

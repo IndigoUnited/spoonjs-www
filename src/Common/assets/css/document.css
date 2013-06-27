@@ -1,0 +1,55 @@
+.document {
+    margin: 100px 30px 0 30px;
+}
+
+.document .content-left {
+    width: 80%;
+    min-width: 700px;
+    min-height: 500px;
+    float: left;
+    /*background: yellow;*/
+}
+
+.document .content-right {
+    width: 20%;
+    min-width: 180px;
+    min-height: 500px;
+    /*background: green;*/
+    float: right;
+    font-size: 13px;
+    position: relative;
+    z-index: 10;
+}
+
+.document .content-right > ul {
+    position: fixed;
+    right: 30px;
+}
+
+.document .content-right ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.document .content-right > ul > li > a {
+    color: #353535;
+    font-weight: bold;
+}
+
+.document .content-right a {
+    color: #7B838A;
+}
+
+.document .content-right > ul > li > ul > li.active a {
+    color: #259dff;
+}
+
+.document .content-right > ul ul {
+    display: none;
+}
+
+.document .content-right > ul li.active ul {
+    display: block;
+}
