@@ -1,0 +1,3 @@
+# StateRegistry
+
+StateRegistry class.

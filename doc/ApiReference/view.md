@@ -5,9 +5,11 @@ Extends [Joint]() class.
 All views need an element to work on.   
 This element can be passed in the view constructor. If none is passed, one will generated according to the `_element` property.
 
-**Parameters**:
+**Parameters**
 
-- element:Element (optional) - The DOM element for the view.
+|                    |         |                               |
+| ------------------ | ------- | ----------------------------- |
+| element (optional) | Element | The DOM element for the view. |
 
 
 ## view._element
@@ -70,7 +72,8 @@ _events: {
 Returns the view's element.
 
 **Returns**
-Element - The view's element.
+
+- Element - The view's element.
 
 
 ## view.appendTo()
@@ -81,13 +84,16 @@ Convenience method to append the element's view to a target.
 The target can be another view, a DOM element or a CSS selector.
 If the target is another view, an additional selector can be passed to specify the element where it will get appended.
 
-**Parameters**:
+**Parameters**
 
-- target:Element|String|View - The target.
-- within:String (optional) - The selector in case the target is a view.
+|                   |                     |                                            |
+| ----------------- | ------------------- | ------------------------------------------ |
+| target            | Element/String/View | The target.                                |
+| within (optional) | String              | The selector in case the target is a view. |
 
 **Returns**
-View - The instance itself to allow chaining.
+
+- View - The instance itself to allow chaining.
 
 
 ## view.prependTo()
@@ -98,13 +104,16 @@ Convenience method to prepend the element's view to a target.
 The target can be another view, a DOM element or a CSS selector.
 If the target is another view, an additional selector can be passed to specify the element where it will get appended.
 
-**Parameters**:
+**Parameters**
 
-- target:Element|String|View - The target.
-- within:String (optional) - The selector in case the target is a view.
+|                   |                     |                                            |
+| ----------------- | ------------------- | ------------------------------------------ |
+| target            | Element/String/View | The target.                                |
+| within (optional) | String              | The selector in case the target is a view. |
 
 **Returns**
-View - The instance itself to allow chaining.
+
+- View - The instance itself to allow chaining.
 
 
 ## view.render()
@@ -114,12 +123,15 @@ View - The instance itself to allow chaining.
 Renders the declared template with the supplied data.
 Note that if this view is not yet linked to its parent, it will make the view listen to the declared DOM events, and also manage its descendants uplinked DOM events.
 
-**Parameters**:
+**Parameters**
 
-- data:Object|Array (optional) - The data to pass to the template.
+|                 |              |                                   |
+| --------------- | ------------ | --------------------------------- |
+| data (optional) | Object/Array | The data to pass to the template. |
 
 **Returns**
-View - The instance itself to allow chaining.
+
+- View - The instance itself to allow chaining.
 
 
 ## view.clear()
@@ -130,7 +142,8 @@ Clears the view's element.
 Note that you must explicitly call unlisten() to remove the DOM event listeners.
 
 **Returns**
-View - The instance itself to allow chaining.
+
+- View - The instance itself to allow chaining.
 
 
 ## view._listen()
@@ -139,12 +152,15 @@ View - The instance itself to allow chaining.
 
 Listen to events.
 
-**Parameters**:
+**Parameters**
 
-- events:Object - An object with the events.
+|        |        |                            |
+| ------ | ------ | -------------------------- |
+| events | Object | An object with the events. |
 
 **Returns**
-Object - The same object.
+
+- Object - The same object.
 
 
 ## view._unlisten()
@@ -153,9 +169,12 @@ Object - The same object.
 
 Unlistens to events.
 
-**Parameters**:
+**Parameters**
 
-- events:Object - An object with the events.
+|        |        |                            |
+| ------ | ------ | -------------------------- |
+| events | Object | An object with the events. |
 
 **Returns**
-Object - The same object.
+
+- Object - The same object.

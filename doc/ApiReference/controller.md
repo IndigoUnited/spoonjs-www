@@ -39,8 +39,9 @@ _defaultState: 'home'
 
 Get the current state or null if none is set.
 
-**Returns**   
-State - The state.
+**Returns**
+
+- State - The state.
 
 
 ## controller.setState()
@@ -50,14 +51,17 @@ State - The state.
 Sets the current state.   
 If the state is the same, nothing happens.
 
-**Parameters**:
+**Parameters**
 
-- state:...mixed (optional) - The state name, the state parameter bag or a state instance.   
-- params:Object (optional) - The state params to be used if the state is a string.   
-- options:Object (optional) - The options.
+|                    |          |                                                              |
+| ------------------ | -------- | ------------------------------------------------------------ |
+| state (optional)   | ...mixed | The state name, the state parameter bag or a state instance. |
+| params (optional)  | Object   | The state params to be used if the state is a string.        |
+| options (optional) | Object   | The options.                                                 |
 
-**Returns**   
-Controller - The instance itself to allow chaining.
+**Returns**
+
+- Controller - The instance itself to allow chaining.
 
 
 ## controller.generateUrl()
@@ -66,10 +70,13 @@ Controller - The instance itself to allow chaining.
 
 Generates an URL for a state.
 
-**Parameters**:
+**Parameters**
 
-- state:String - The state name.   
-- params:Object (optional) - The state params.
+|                   |        |                   |
+| ----------------- | ------ | ----------------- |
+| state             | String | The state name.   |
+| params (optional) | Object | The state params. |
 
-**Returns**   
-String - The generated URL.
+**Returns**
+
+- String - The generated URL.
