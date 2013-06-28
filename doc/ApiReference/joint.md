@@ -80,7 +80,7 @@ Joint - The joint passed in as the argument.
 
 `protected method` __unlink(joint)_
 
-Removes a previously created link between a joint and another one.
+Removes a previously created link between this joint and another one.
 
 **Parameters**:
 - joint:Joint - Another joint to link to this one.
@@ -123,6 +123,6 @@ Joint - The instance itself to allow chaining.
 
 `protected method` __onDestroy()_
 
-Method called after calling destroy().
+Method called by `destroy()`.   
 Subclasses should override this method to release additional resources.   
 The default implementation will also destroy any linked joints.

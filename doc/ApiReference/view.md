@@ -18,6 +18,15 @@ A CSS selector used to build an element for the view in case one is not passed t
 Defaults to `div`.
 
 
+```js
+_element: 'li.item'
+```
+
+```js
+_element: 'div#main-view[data-foo="bar"]'
+```
+
+
 ## view._template
 
 `protected property` _template
@@ -29,6 +38,10 @@ Defaults to `null`.
 
 ```js
 _template: Handlebars.compile('<div>{{name}}</div>')
+```
+
+```js
+_template: doT.template('<div>{{=name}}</div>')
 ```
 
 
@@ -87,7 +100,7 @@ If the target is another view, an additional selector can be passed to specify t
 
 **Parameters**:
 
- - target:Element|String|View - The target.
+- target:Element|String|View - The target.
 - within:String (optional) - The selector in case the target is a view.
 
 **Returns**
