@@ -141,9 +141,6 @@ define([
                     topics.push(name);
                     subtopics[name] = [];
                 } else {
-                    // Extract only the function name
-                    name = name.split('.');
-                    name = name[name.length - 1];
                     subtopics[currTopic].push(name);
                 }
 
