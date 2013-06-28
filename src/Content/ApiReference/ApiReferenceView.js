@@ -4,10 +4,9 @@ define([
     'text!./assets/tmpl/view.html',
     'text!./assets/tmpl/joint.html',
     'text!./assets/tmpl/broadcaster.html',
-    'text!./assets/tmpl/route.html',
     'text!./assets/tmpl/stateRegistry.html',
     'css!./assets/css/api_reference.css'
-], function (DocumentView, controllerTmpl, viewTmpl, jointTmpl, broadcasterTmpl, routeTmpl, stateRegistryTmpl) {
+], function (DocumentView, controllerTmpl, viewTmpl, jointTmpl, broadcasterTmpl, stateRegistryTmpl) {
 
     'use strict';
 
@@ -20,7 +19,7 @@ define([
          * {@inheritDoc}
          */
         render: function () {
-            this.setBlocks([controllerTmpl, viewTmpl, jointTmpl, broadcasterTmpl, routeTmpl, stateRegistryTmpl]);
+            this.setBlocks([controllerTmpl, viewTmpl, jointTmpl, broadcasterTmpl, stateRegistryTmpl]);
 
             return DocumentView.prototype.render.call(this);
         }
