@@ -2,6 +2,7 @@
 
 StateRegistry class.
 
+
 ## stateRegistry.setAddress()
 
 `public method` _setAddress([address])_
