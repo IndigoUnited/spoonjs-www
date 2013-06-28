@@ -4,12 +4,14 @@ define([
     'doT',
     'mout/string/slugify',
     'mout/array/map',
+    'rainbow/js/language/javascript',
     'text!./assets/tmpl/document.html',
     'text!./assets/tmpl/document_topics.html',
     'css!./assets/css/general.css',
     'css!./assets/css/document.css',
+    'css!rainbow/themes/github.css',
     'jquery.scrollTo'
-], function (View, $, doT, slugify, map, tmpl, topicsTmpl) {
+], function (View, $, doT, slugify, map, Rainbow, tmpl, topicsTmpl) {
 
     'use strict';
 
@@ -66,6 +68,11 @@ define([
             // Listen to the scroll in order to update the active topic
             $(document).on('scroll', this._onScroll);
 
+            // HighlighT code
+            // Add data-language="javascript" because Rainbow needs it
+            this._element.find('.lang-js').attr('data-language', 'javascript');
+            Rainbow.color(this._element.get(0));
+
             return this;
         },
 
@@ -77,7 +84,6 @@ define([
          * @return {DocumentView} Chaining!
          */
         scrollTo: function (topic) {
-            console.log(this._generateTopicClass(topic))
             $.scrollTo('.' + this._generateTopicClass(topic), 300, { offset: -70 });
 
             return this;

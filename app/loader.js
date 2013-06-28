@@ -13,6 +13,7 @@ requirejs.config({
         'bootstrap': '../components/bootstrap/js/bootstrap',
         'bootstrap-css': '../components/bootstrap/css',
         'normalize-css': '../components/normalize-css',
+        'rainbow': '../components/rainbow',
         'jquery.scrollTo': '../components/jquery.scrollTo/jquery.scrollTo'
     },
     shim: {
@@ -20,8 +21,19 @@ requirejs.config({
             exports: 'Handlebars'
         },
         'jquery.scrollTo': {
-            depends: ['jquery'],
+            deps: ['jquery'],
             exports: '$'
+        },
+        'rainbow': {
+            exports: 'Rainbow'
+        },
+        'rainbow/js/language/generic': {
+            deps: ['rainbow/js/rainbow'],
+            exports: 'Rainbow'
+        },
+        'rainbow/js/language/javascript': {
+            deps: ['rainbow/js/language/generic'],
+            exports: 'Rainbow'
         }
     },
     map: {

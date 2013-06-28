@@ -11,6 +11,7 @@
     "mout": "~0.6.0",
     "normalize-css": "~2.1",
     "doT": "~0.2",
-    "jquery.scrollTo": "~1.4"
+    "jquery.scrollTo": "~1.4",
+    "rainbow": "~1.1"
   }
 }
