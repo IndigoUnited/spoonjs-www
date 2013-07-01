@@ -1,13 +1,20 @@
 # Address
 
-This class serves as a base for both hash and html5 implementations.
-Those simply need to implement the abstract functions to work correctly.
+A service responsible to deal with the browser address bar.   
+This service is simply an pre-configured instance of [IndigoUnited/address](https://github.com/IndigoUnited/address). Head over that repository to find additional documentation.
 
-This class also handles the clicks in the link tags (<a> tags).
-If a link is meant to be a regular link, use the data-url-type="external".
-If a link is mean to be an internal link but not handled by this address use data-url-type="internal".
-Please note that links with target!="_self" and external urls are in general automatically ignored.
-There is also a data-url-force option. When set to true, the value will be changed even if its the current one.
+Please note that you should avoid accessing this service directly. URL's are not meant to be used directly in the application,
+states are!
+
+The service maybe be accessed by requiring `services/address`.   
+You can replace this service by your own if it obeys the public interface.
+
+
+```js
+define(['services/address'], function (address) {
+    //..
+});
+```
 
 **Parameters**
 
@@ -84,9 +91,7 @@ Address - The instance itself to allow chaining.
 
 ```js
 define(['services/address'], function (address) {
-
     address.setValue('/', { silent: true });
-
 });
 ```
 
@@ -123,9 +128,7 @@ String - The generated URL.
 
 ```js
 define(['services/address'], function (address) {
-
     address.generateUrl('home');
-
 });
 ```
 

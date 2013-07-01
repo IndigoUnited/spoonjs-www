@@ -40,7 +40,7 @@ define(['spoon/View'], function (MyView) {
     return MyView;
 });
 
-// instantiation example
+// Instantiation example
 define(['path/to/MyView'], function (MyView) {
     var myView = new MyView();
     //..
@@ -59,7 +59,7 @@ Defaults to `div`.
 ```js
 _element: 'li.item'
 
-// more complex element
+// More complex element
 _element: 'div#main-view[data-foo="bar"]'
 ```
 
@@ -202,8 +202,8 @@ myView.render({
 
 `public method` _clear()_
 
-Clears the view's element.
-Note that you must explicitly call _unlisten() to remove the DOM event listeners.
+Clears the view's element.   
+Note that you must explicitly call [_unlisten()]() to remove the DOM event listeners.
 
 **Returns**
 
@@ -264,7 +264,7 @@ define(['spoon/View'], function (MyView) {
 `protected method` __unlisten(events)_
 
 Unlistens to events.   
-Note that the exact same object reference passed [_listen()]() must be passed.
+Note that the exact same object reference passed to [_listen()]() must be used.
 
 **Parameters**
 

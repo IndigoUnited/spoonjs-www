@@ -4,7 +4,7 @@ define([
     'text!./assets/tmpl/view.html',
     'text!./assets/tmpl/joint.html',
     'text!./assets/tmpl/broadcaster.html',
-    'text!./assets/tmpl/stateRegistry.html',
+    'text!./assets/tmpl/state_registry.html',
     'text!./assets/tmpl/address.html',
     'css!./assets/css/api_reference.css'
 ], function (DocumentView, controllerTmpl, viewTmpl, jointTmpl, broadcasterTmpl, stateRegistryTmpl, addressTmpl) {

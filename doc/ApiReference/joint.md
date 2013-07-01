@@ -1,7 +1,7 @@
 # Joint
 
-A Joint is a base class that all components considered a node in the hierarchy extend from.
-Its functionality can be resumed to:
+A Joint is a base class that all components considered a node in the hierarchy extend from.   
+It's functionality can be resumed to:
 
 - Link and unlink other node to form the hierarchy
 - Ability to listen and emit events to/from linked nodes or descendants
@@ -32,6 +32,19 @@ Duplicate listeners for the same event will be discarded.
 **Returns**
 
 Joint - The instance itself to allow chaining.
+
+
+```js
+var myView = new MyView();
+myView.on('delete', function () {
+    console.log('user wants to delete', arguments);
+});
+
+myView = new MyView();
+myView.on('save', function () {
+    console.log('user wants to save', arguments);
+}, this);
+```
 
 
 ## joint.once()
@@ -73,6 +86,26 @@ Removes a previously added listener.
 Joint - The instance itself to allow chaining.
 
 
+```js
+var MyController = Controller.extend({
+    //..
+    index: function () {
+        this._view = this._link(new MyView());
+        this._view.on('delete', this._delete, this);
+
+        // Later..
+        this._view.off('delete');
+        // Or..
+        this._view.off('delete', this._delete, this);
+    },
+
+    _delete: function () {
+        //..
+    }
+});
+```
+
+
 ## joint.destroy()
 
 `public method` _destroy()_
@@ -87,7 +120,8 @@ Internally calls `_onDestroy()` only once, even on consecutive calls to `destroy
 
 `protected method` __link(joint)_
 
-Creates a link between this joint and another one.
+Creates a link between this joint and another one.   
+Once linked, descendants events flow upwards the hierarchy chain.
 
 **Parameters**
 
@@ -99,6 +133,16 @@ Creates a link between this joint and another one.
 
 Joint - The joint passed in as the argument.
 
+
+```js
+var MyController = Controller.extend({
+    //..
+    index: function () {
+        this._view = this._link(new MyView());
+        //..
+    }
+});
+```
 
 ## joint._unlink()
 
@@ -125,9 +169,6 @@ Fires an event upwards the chain.
 
 **Parameters**:
 
-- event:String - The event name.   
-- args:...mixed (optional) - The arguments to pass along with the event.
-
 |                 |          |                                             |
 | --------------- | -------- | ------------------------------------------- |
 | event           | String   | The event name.                             |
@@ -136,6 +177,19 @@ Fires an event upwards the chain.
 **Returns**
 
 Joint - The instance itself to allow chaining.
+
+
+```js
+var MyView = Controller.extend({
+    _events: {
+        'click .btn': '_onBtnClick'
+    },
+
+    _onBtnClick: function () {
+        this._upcast('activate', 'foo', 'bar');
+    }
+});
+```
 
 
 ## joint._broadcast()
@@ -154,6 +208,8 @@ Fires an event to all the joints.
 **Returns**
 
 Joint - The instance itself to allow chaining.
+
+Please read the [_upcast()]() for an usage example.
 
 
 ## joint._onDestroy()

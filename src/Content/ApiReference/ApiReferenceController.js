@@ -11,7 +11,7 @@ define([
         _defaultState: 'index',
         _states: {
             'index': '_indexState',
-            'topic(name)': '_topicState'
+            'topic(*)': '_topicState'
         },
 
         /**

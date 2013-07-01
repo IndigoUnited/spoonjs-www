@@ -1,6 +1,16 @@
 # StateRegistry
 
-StateRegistry class.
+A service responsible for the global application state.
+
+The service maybe be accessed by requiring `services/state`.   
+You can replace this service by your own if it obeys the public interface.
+
+
+```js
+define(['services/state'], function (stateRegistry) {
+    //..
+});
+```
 
 
 ## stateRegistry.setAddress()
@@ -17,7 +27,7 @@ Sets the address.
 
 **Returns**
 
-- StateRegistry - The instance itself to allow chaining.
+StateRegistry - The instance itself to allow chaining.
 
 
 ## stateRegistry.unsetAddress()
@@ -28,7 +38,7 @@ Unsets the address.
 
 **Returns**
 
-- StateRegistry - The instance itself to allow chaining.
+StateRegistry - The instance itself to allow chaining.
 
 
 ## stateRegistry.parse()
@@ -50,7 +60,7 @@ This function is handy to kick-off the state registry.
 
 **Returns**
 
-- StateRegistry - The instance itself to allow chaining.
+StateRegistry - The instance itself to allow chaining.
 
 
 ## stateRegistry.register()
@@ -72,7 +82,7 @@ An error will be thrown if the state being registered already exists.
 
 **Returns**
 
-- StateRegistry - The instance itself to allow chaining.
+StateRegistry - The instance itself to allow chaining.
 
 
 ## stateRegistry.unregister()
@@ -89,7 +99,7 @@ Unregisters a state.
 
 **Returns**
 
-- StateRegistry - The instance itself to allow chaining.
+StateRegistry - The instance itself to allow chaining.
 
 
 ## stateRegistry.unregisterAll()
@@ -100,7 +110,7 @@ Unregisters all the registered states.
 
 **Returns**
 
-- StateRegistry - The instance itself to allow chaining.
+StateRegistry - The instance itself to allow chaining.
 
 
 ## stateRegistry.isRegistered()
@@ -117,7 +127,7 @@ Checks if a state is registered.
 
 **Returns**
 
-- Boolean - True if it is, false otherwise.
+Boolean - True if it is, false otherwise.
 
 
 ## stateRegistry.isRoutable()
@@ -134,7 +144,7 @@ Checks if state is registered and has a route associated to it.
 
 **Returns**
 
-- Boolean - True if it is, false otherwise.
+Boolean - True if it is, false otherwise.
 
 
 ## stateRegistry.isValid()
@@ -151,7 +161,7 @@ Checks if a given state name is valid.
 
 **Returns**
 
-- Boolean - True if valid, false otherwise.
+Boolean - True if valid, false otherwise.
 
 
 ## stateRegistry.setCurrent()
@@ -180,7 +190,7 @@ The default implementation should handle these options:
 
 **Returns**
 
-- Boolean - True if the transition was made, false otherwise.
+Boolean - True if the transition was made, false otherwise.
 
 
 ## stateRegistry.getCurrent()
@@ -191,7 +201,7 @@ Returns the current state.
 
 **Returns**
 
-- State - The state.
+State - The state.
 
 
 ## stateRegistry.isCurrent()
@@ -209,7 +219,7 @@ Check if the current state is the same as the passed one.
 
 **Returns**
 
-- Boolean - True if it is, false otherwise.
+Boolean - True if it is, false otherwise.
 
 
 ## stateRegistry.generateUrl()
@@ -229,7 +239,7 @@ If no route is associated with the state, a state:// URL will be generated.
 
 **Returns**
 
-- String - The URL for the state or null if unable to generate one.
+String - The URL for the state or null if unable to generate one.
 
 
 ## stateRegistry.destroy()

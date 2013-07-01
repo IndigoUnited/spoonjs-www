@@ -1,5 +1,5 @@
 {
-  "name": "test",
+  "name": "spoonjs-www",
   "version": "0.0.1",
   "devDependencies": {
     "mout": "~0.3.0",
