@@ -31,7 +31,7 @@ Duplicate listeners for the same event will be discarded.
 
 **Returns**
 
-- Joint - The instance itself to allow chaining.
+Joint - The instance itself to allow chaining.
 
 
 ## joint.once()
@@ -51,7 +51,7 @@ Duplicate listeners for the same event will be discarded.
 
 **Returns**
 
-- Joint - The instance itself to allow chaining.
+Joint - The instance itself to allow chaining.
 
 
 ## joint.off()
@@ -70,7 +70,7 @@ Removes a previously added listener.
 
 **Returns**
 
-- Joint - The instance itself to allow chaining.
+Joint - The instance itself to allow chaining.
 
 
 ## joint.destroy()
@@ -97,7 +97,7 @@ Creates a link between this joint and another one.
 
 **Returns**
 
-- Joint - The joint passed in as the argument.
+Joint - The joint passed in as the argument.
 
 
 ## joint._unlink()
@@ -114,7 +114,7 @@ Removes a previously created link between this joint and another one.
 
 **Returns**
 
-- Joint - The instance itself to allow chaining.
+Joint - The instance itself to allow chaining.
 
 
 ## joint._upcast()
@@ -135,7 +135,7 @@ Fires an event upwards the chain.
 
 **Returns**
 
-- Joint - The instance itself to allow chaining.
+Joint - The instance itself to allow chaining.
 
 
 ## joint._broadcast()
@@ -153,7 +153,7 @@ Fires an event to all the joints.
 
 **Returns**
 
-- Joint - The instance itself to allow chaining.
+Joint - The instance itself to allow chaining.
 
 
 ## joint._onDestroy()
