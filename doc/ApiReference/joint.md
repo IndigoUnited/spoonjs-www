@@ -8,7 +8,7 @@ Its functionality can be resumed to:
 - Ability to listen and emit events to/from all nodes in the hierarchy (flood/broadcast)
 
 
-## join.initialize()
+## joint.initialize()
 
 Method called when instantiating a Joint.   
 Since this class is `abstract`, it's meant to be extended and not used directly.
