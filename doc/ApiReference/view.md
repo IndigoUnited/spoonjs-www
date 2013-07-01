@@ -2,7 +2,7 @@
 
 Extends [Joint]() class.
 
-A view is a node in the hierarchy that has the role to display data (model) visually.
+A view is a node in the hierarchy that has the role to display data (model) visually.   
 The view is free to instantiate other sub-views and link them to itself so that events flow upon the hierarchy.
 
 
@@ -29,10 +29,10 @@ Please read below to know how to extend it.
 
 ```js
 define(['spoon/View'], function (MyView) {
-    var MyView = Controller.extend({
+    var MyView = View.extend({
         //..
         initialize: function () {
-            Controller.call(this);
+            View.call(this);
         },
         //..
     });
@@ -42,7 +42,7 @@ define(['spoon/View'], function (MyView) {
 
 // instantiation example
 define(['path/to/MyView'], function (MyView) {
-    var myCtrl = new MyView();
+    var myView = new MyView();
     //..
 });
 ```
@@ -132,16 +132,16 @@ View - The instance itself to allow chaining.
 
 
 ```js
-// append to an element referenced by a CSS selector
+// Append to an element referenced by a CSS selector
 var myView = new MyView();
 myView.appendTo('#content');
 
-// append to another view
-// parent view is a reference to another view
+// Append to another view
+// parentView is a reference to another view
 var childView = new ListItemView();
 myView.appendTo(parentView);
 
-// append to another view, inside a specific element of it
+// Append to another view, inside a specific element of it
 var childView = new ListItemView();
 myView.appendTo(parentView, '.container');
 ```
@@ -229,10 +229,11 @@ Object - The same object.
 
 ```js
 define(['spoon/View'], function (MyView) {
-    var MyView = Controller.extend({
+    var MyView = View.extend({
+        //..
         _events: {
             'click .btn-enable': '_onEnableClick',
-            'click .btn-disable': 'onDisableClick'
+            'click .btn-disable': '_onDisableClick'
         },
 
         _enabledEvents: {
@@ -245,6 +246,10 @@ define(['spoon/View'], function (MyView) {
 
         _onDisableClick: function () {
             this._unlisten(this._enabledEvents);
+        },
+
+        _onSave: function () {
+            this._upcast('save', { /*.. */ });
         }
     });
 

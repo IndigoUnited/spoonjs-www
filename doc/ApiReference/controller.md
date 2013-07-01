@@ -23,7 +23,6 @@ Since this class is `abstract` it's meant to be extended and not used directly.
 Please read below to know how to extend it.
 
 
-
 ## controller.initialize()
 
 `constructor`
@@ -48,7 +47,7 @@ define(['spoon/Controller'], function (Controller) {
     return MyController;
 });
 
-// instantiation example
+// Instantiation example
 define(['path/to/MyController'], function (MyController) {
     var myCtrl = new MyController();
     //..
@@ -63,7 +62,6 @@ define(['path/to/MyController'], function (MyController) {
 An object where keys are states and values the functions to run for that state.
 
 ```js
-
 _states: {
     'home': '_homeState',
     'show(id)': '_showState',
@@ -105,6 +103,9 @@ State - The state.
 Sets the current state.   
 If the state is the same, nothing happens.
 
+When the `state` is a string, you can reference ancestors states relatively and absolutely.
+Read the example below.
+
 **Parameters**
 
 |                    |          |                                                              |
@@ -116,6 +117,53 @@ If the state is the same, nothing happens.
 **Returns**
 
 Controller - The instance itself to allow chaining.
+
+
+```js
+define(['spoon/Controller'], function (Controller) {
+    var MyController = Controller.extend({
+        _states: {
+            'index': 'index',
+            'show(id)': 'show'
+        },
+
+        index: function () {
+            //..
+        },
+
+        show: function (state) {
+            console.log('To be done');
+
+            // Change the state referencing a local state
+            this.setState('index');
+
+            // You can also reference a state relatively or absolutely
+            // While this might be useful in some situations, avoid using it since your module
+            // is no longer self contained and easily reusable
+
+            // Will change the global state to the parent's home state
+            this.setState('../home');
+            // Will change the global state to the root controller's home state
+            this.setState('/home');
+        },
+
+        edit: function (state) {
+            if (this._editModule) {
+                this._editModule.destroy();
+            }
+
+            this._editModule = new EditModuleController();
+            // Push the state to to the child controller
+            // Note that the state argument is the state parameter bag that
+            // contains not only the state parameters but also additional data
+            // about the state itself used internally by the framework
+            this._editModule.setState(state);
+        }
+    });
+
+    return MyController;
+});
+```
 
 
 ## controller.generateUrl()
@@ -134,3 +182,21 @@ Generates an URL for a state.
 **Returns**
 
 String - The generated URL.
+
+
+```js
+define(['spoon/Controller'], function (Controller) {
+    var MyController = Controller.extend({
+        _states: {
+            'show(id)': 'show'
+        },
+
+        show: function (state) {
+            console.log('URL for my state is:', this.generateUrl('show', { id: state.id }));
+            //..
+        }
+    });
+
+    return MyController;
+});
+```
