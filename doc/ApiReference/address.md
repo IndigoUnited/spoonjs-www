@@ -24,7 +24,7 @@ Enables the address.
 
 **Returns**
 
-- Address - The instance itself to allow chaining.
+Address - The instance itself to allow chaining.
 
 
 ## address.disable()
@@ -35,7 +35,7 @@ Disables the address.
 
 **Returns**
 
-- Address - The instance itself to allow chaining.
+Address - The instance itself to allow chaining.
 
 
 ## address.getValue()
@@ -52,7 +52,7 @@ Returns the current address value.
 
 **Returns**
 
-- String - The current value.
+String - The current value.
 
 
 ## address.setValue()
@@ -72,15 +72,23 @@ The default implementation should handle these options:
 
 **Parameters**
 
-|                    |        |                     |
-| ------------------ | -----  | ------------------- |
-| value              | String | The value to be set |
-| options (optional) | Object | The options         |
+|                    |        |                      |
+| ------------------ | -----  | -------------------- |
+| value              | String | The value to be set. |
+| options (optional) | Object | The options.         |
 
 **Returns**
 
-- Address - The instance itself to allow chaining.
+Address - The instance itself to allow chaining.
 
+
+```js
+define(['services/address'], function (address) {
+
+    address.setValue('/', { silent: true });
+
+});
+```
 
 ## address.reset()
 
@@ -91,7 +99,7 @@ Clears the internal value and any other state.
 
 **Returns**
 
-- Address - The instance itself to allow chaining.
+Address - The instance itself to allow chaining.
 
 
 ## address.generateUrl()
@@ -110,8 +118,16 @@ By default the generated URL will be relative unless absolute is true.
 
 **Returns**
 
-- String - The generated URL.
+String - The generated URL.
 
+
+```js
+define(['services/address'], function (address) {
+
+    address.generateUrl('home');
+
+});
+```
 
 ## address.destroy()
 
