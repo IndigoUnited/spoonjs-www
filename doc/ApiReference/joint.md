@@ -1,6 +1,17 @@
 # Joint
 
-A Joint represents a node in the hierarchy.
+A Joint is a base class that all components considered a node in the hierarchy extend from.
+Its functionality can be resumed to:
+
+- Link and unlink other node to form the hierarchy
+- Ability to listen and emit events to/from linked nodes or descendants
+- Ability to listen and emit events to/from all nodes in the hierarchy (flood/broadcast)
+
+
+## join.initialize()
+
+Method called when instantiating a Joint.   
+Since this class is `abstract`, it's meant to be extended and not used directly.
 
 
 ## joint.on()

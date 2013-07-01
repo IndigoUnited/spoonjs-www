@@ -2,14 +2,50 @@
 
 Extends [Joint]() class.
 
-All views need an element to work on.   
-This element can be passed in the view constructor. If none is passed, one will generated according to the `_element` property.
+A view is a node in the hierarchy that has the role to display data (model) visually.
+The view is free to instantiate other sub-views and link them to itself so that events flow upon the hierarchy.
+
+
+## view.initialize()
+
+`constructor`
+
+All views need an DOM element to work on.   
+This element can be passed in the view constructor.
+If none is passed, one will generated according to the `_element` property.
+
+Note that all child classes should call this method.
+
+Since this class is `abstract` it's meant to be extended and not used directly.
+Please read below to know how to extend it.
 
 **Parameters**
 
 |                    |         |                               |
 | ------------------ | ------- | ----------------------------- |
 | element (optional) | Element | The DOM element for the view. |
+
+
+
+```js
+define(['spoon/View'], function (MyView) {
+    var MyView = Controller.extend({
+        //..
+        initialize: function () {
+            Controller.call(this);
+        },
+        //..
+    });
+
+    return MyView;
+});
+
+// instantiation example
+define(['path/to/MyView'], function (MyView) {
+    var myCtrl = new MyView();
+    //..
+});
+```
 
 
 ## view._element
@@ -22,9 +58,8 @@ Defaults to `div`.
 
 ```js
 _element: 'li.item'
-```
 
-```js
+// more complex element
 _element: 'div#main-view[data-foo="bar"]'
 ```
 
@@ -39,10 +74,10 @@ Defaults to `null`.
 
 
 ```js
+// Handlebars example
 _template: Handlebars.compile('<div>{{name}}</div>')
-```
 
-```js
+// doT example
 _template: doT.template('<div>{{=name}}</div>')
 ```
 
@@ -73,7 +108,7 @@ Returns the view's element.
 
 **Returns**
 
-- Element - The view's element.
+Element - The view's element.
 
 
 ## view.appendTo()
@@ -93,8 +128,23 @@ If the target is another view, an additional selector can be passed to specify t
 
 **Returns**
 
-- View - The instance itself to allow chaining.
+View - The instance itself to allow chaining.
 
+
+```js
+// append to an element referenced by a CSS selector
+var myView = new MyView();
+myView.appendTo('#content');
+
+// append to another view
+// parent view is a reference to another view
+var childView = new ListItemView();
+myView.appendTo(parentView);
+
+// append to another view, inside a specific element of it
+var childView = new ListItemView();
+myView.appendTo(parentView, '.container');
+```
 
 ## view.prependTo()
 
@@ -111,27 +161,41 @@ If the target is another view, an additional selector can be passed to specify t
 | target            | Element/String/View | The target.                                |
 | within (optional) | String              | The selector in case the target is a view. |
 
+
+Please read the [appendTo()]() example as its signature is the same.
+
+
 **Returns**
 
-- View - The instance itself to allow chaining.
+View - The instance itself to allow chaining.
 
 
 ## view.render()
 
 `public method` _render(data)_
 
-Renders the declared template with the supplied data.
-Note that if this view is not yet linked to its parent, it will make the view listen to the declared DOM events, and also manage its descendants uplinked DOM events.
+Renders the declared template with the supplied data.   
+The passed data will be feed into the template function.
 
 **Parameters**
 
-|                 |              |                                   |
-| --------------- | ------------ | --------------------------------- |
-| data (optional) | Object/Array | The data to pass to the template. |
+|                 |              |                                                      |
+| --------------- | ------------ | ---------------------------------------------------- |
+| data (optional) | Object/Array | The data to pass to the template (defaults to `{}`). |
 
 **Returns**
 
-- View - The instance itself to allow chaining.
+View - The instance itself to allow chaining.
+
+
+```js
+var myView = new MyView();
+myView.appendTo('#content');
+myView.render({
+    name: 'Indigo United',
+    email: 'hello@indigounited.com'
+});
+```
 
 
 ## view.clear()
@@ -139,35 +203,63 @@ Note that if this view is not yet linked to its parent, it will make the view li
 `public method` _clear()_
 
 Clears the view's element.
-Note that you must explicitly call unlisten() to remove the DOM event listeners.
+Note that you must explicitly call _unlisten() to remove the DOM event listeners.
 
 **Returns**
 
-- View - The instance itself to allow chaining.
+View - The instance itself to allow chaining.
 
 
 ## view._listen()
 
 `protected method` __listen(events)_
 
-Listen to events.
+Listen to a set of events.
+
 
 **Parameters**
 
-|        |        |                            |
-| ------ | ------ | -------------------------- |
-| events | Object | An object with the events. |
+|        |        |                                                                 |
+| ------ | ------ | --------------------------------------------------------------  |
+| events | Object | An object with the events (defaults to the declared `_events`). |
 
 **Returns**
 
-- Object - The same object.
+Object - The same object.
 
+```js
+define(['spoon/View'], function (MyView) {
+    var MyView = Controller.extend({
+        _events: {
+            'click .btn-enable': '_onEnableClick',
+            'click .btn-disable': 'onDisableClick'
+        },
+
+        _enabledEvents: {
+            'click .btn-save': '_onSave',
+        },
+
+        _onEnableClick: function () {
+            this._listen(this._enabledEvents);
+        },
+
+        _onDisableClick: function () {
+            this._unlisten(this._enabledEvents);
+        }
+    });
+
+    return MyView;
+});
+
+
+```
 
 ## view._unlisten()
 
 `protected method` __unlisten(events)_
 
-Unlistens to events.
+Unlistens to events.   
+Note that the exact same object reference passed [_listen()]() must be passed.
 
 **Parameters**
 
@@ -177,4 +269,6 @@ Unlistens to events.
 
 **Returns**
 
-- Object - The same object.
+Object - The same object.
+
+Please read the [_listen()]() for an usage example.

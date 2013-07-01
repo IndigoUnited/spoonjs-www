@@ -100,3 +100,7 @@
     font-family: Consolas, 'Liberation Mono', Courier, monospace;
     font-size: 1.1em;
 }
+
+.document table ~ pre {
+    margin-top: 40px;
+}
