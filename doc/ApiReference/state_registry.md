@@ -1,5 +1,7 @@
 # StateRegistry
 
+`service`
+
 A service responsible for the global application state.
 
 The service maybe be accessed by requiring `services/state`.   

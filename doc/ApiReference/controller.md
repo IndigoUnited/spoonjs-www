@@ -6,19 +6,6 @@ A controller is a node in the hierarchy that exposes a module.
 A module is a self contained unit that encapsulates a limited set of functionality.
 Whenever you want to use a module, you do so by instantiating its controller.
 
-Its main roles are:
-
-- Control the module flow, in terms of what is currently being shown to the user
-
-  This is typically done with controller states, each one maps to an action being shown/performed.
-  The controller is free to instantiate the necessary views or even other modules, linking them to itself so that events flow upon the hierarchy.
-
-- Listens for the view events and acts upon them, either transitioning to a new state, requesting data or something else
-
-- Passes the data necessary for its view(s) in order to represent the data (model) visually.
-
-  Note that the data may be manipulated according to what the view expects it to be
-
 Since this class is `abstract` it's meant to be extended and not used directly.
 Please read below to know how to extend it.
 

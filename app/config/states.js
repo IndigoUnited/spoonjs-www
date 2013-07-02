@@ -7,6 +7,8 @@ define(function () {
         api: {
             topic: '/{name}'
         },
-        guide: '/guide'
+        guide: {
+            topic: '/{name}'
+        }
     };
 });

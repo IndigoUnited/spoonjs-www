@@ -1,5 +1,7 @@
 # Address
 
+`service`
+
 A service responsible to deal with the browser address bar.   
 This service is simply an pre-configured instance of [IndigoUnited/address](https://github.com/IndigoUnited/address). Head over that repository to find additional documentation.
 

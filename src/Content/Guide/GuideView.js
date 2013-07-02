@@ -1,9 +1,10 @@
 define([
     '../../Common/DocumentView',
-    'text!./assets/tmpl/getting_started.html',
+    'text!./assets/tmpl/motivation.html',
+    'text!./assets/tmpl/concepts.html',
     'text!./assets/tmpl/folder_structure.html',
     'css!./assets/css/guide.css'
-], function (DocumentView, gettingStartedTmpl, folderStructureTmpl) {
+], function (DocumentView, motivationTmpl, conceptsTmpl, folderStructureTmpl) {
 
     'use strict';
 
@@ -16,7 +17,7 @@ define([
          * {@inheritDoc}
          */
         render: function () {
-            this.setBlocks([gettingStartedTmpl, folderStructureTmpl]);
+            this.setBlocks([motivationTmpl, conceptsTmpl, folderStructureTmpl]);
 
             return DocumentView.prototype.render.call(this);
         }

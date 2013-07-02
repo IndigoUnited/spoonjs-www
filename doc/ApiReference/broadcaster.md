@@ -1,5 +1,7 @@
 # Broadcaster
 
+`service`
+
 A service responsible to broadcast events.   
 Whenever `_broadcast()` on a `Joint` is called, this service will be responsible to deliver it
 to every node in the hierarchy.

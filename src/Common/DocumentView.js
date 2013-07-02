@@ -22,6 +22,10 @@ define([
         _template: doT.template(tmpl),
         _topicsTemplate: doT.template(topicsTmpl),
 
+        _events: {
+            'click .go-top': '_onGoTopClick'
+        },
+
         /**
          * {@inheritDoc}
          */
@@ -213,6 +217,13 @@ define([
 
             // Fallback to the first one
             this.setActive(this._headings[0].topic);
+        },
+
+        /**
+         * Handles the go top click event.
+         */
+        _onGoTopClick: function () {
+            $.scrollTo({ top: 0, left: 0 }, 300);
         },
 
         /**
