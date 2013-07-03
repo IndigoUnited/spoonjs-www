@@ -17,9 +17,6 @@ requirejs.config({
         'jquery.scrollTo': '../components/jquery.scrollTo/jquery.scrollTo'
     },
     shim: {
-        'handlebars': {
-            exports: 'Handlebars'
-        },
         'jquery.scrollTo': {
             deps: ['jquery'],
             exports: '$'
