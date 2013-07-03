@@ -212,9 +212,226 @@ In this case, we will create a module for each menu item:
 - `spoon module create Content/Tags`
 - `spoon module create Content/History`
 
-Now lets setup the `ContentController` states as describe above:
+Now lets setup the `ContentController` to do what as been described above:
 
+```js
+define([
+    'spoon/Controller',
+    './ContentView',
+    './Code/CodeController',
+    './Issues/IssuesController',
+    './Tags/TagsController',
+    './History/HistoryController'
+], function (Controller, ContentView, CodeController, IssuesController, TagsController, HistoryController) {
 
+    'use strict';
+
+    return Controller.extend({
+        $name: 'ContentController',
+
+        _defaultState: 'code',
+        _states: {
+            'code': '_codeState',
+            'issues': '_issuesState',
+            'tags': '_tagsState',
+            'history': '_historyState'
+        },
+
+        /**
+         * Constructor.
+         *
+         * @param {Element} element The element in which the module will work on
+         */
+        initialize: function (element) {
+            Controller.call(this);
+
+            this._view = this._link(new ContentView());
+            this._view.appendTo(element);
+
+            this.once('link', function () {
+                this._view.render();
+            }.bind(this));
+        },
+
+        /**
+         * Code state handler.
+         *
+         * @param {Object} state The state parameter bag
+         */
+        _codeState: function (state) {
+            this._view.selectMenu('code');
+            this._destroyContent();
+
+            this._content = this._link(new CodeController(this._view.getContentElement()));
+            this._content.setState(state);
+        },
+
+        /**
+         * Issues state handler.
+         *
+         * @param {Object} state The state parameter bag
+         */
+        _issuesState: function (state) {
+            this._view.selectMenu('issues');
+            this._destroyContent();
+
+            this._content = this._link(new IssuesController(this._view.getContentElement()));
+            this._content.setState(state);
+        },
+
+        /**
+         * Tags state handler.
+         *
+         * @param {Object} state The state parameter bag
+         */
+        _tagsState: function (state) {
+            this._view.selectMenu('tags');
+            this._destroyContent();
+
+            this._content = this._link(new TagsController(this._view.getContentElement()));
+            this._content.setState(state);
+        },
+
+        /**
+         * History state handler.
+         *
+         * @param {Object} state The state parameter bag
+         */
+        _historyState: function (state) {
+            this._view.selectMenu('history');
+            this._destroyContent();
+
+            this._content = this._link(new HistoryController(this._view.getContentElement()));
+            this._content.setState(state);
+        },
+
+        /**
+         * Destroys the current content if any.
+         */
+        _destroyContent: function () {
+            if (this._content) {
+                this._content.destroy();
+                this._content = null;
+            }
+        }
+    });
+});
+
+```
+
+Next lets add some HTML and css in the `ContentView` template and css files:
+
+```html
+<div class="left">
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <ul class="nav">
+                <li class="code"><a href="{{url "code" }}">Code</a></li>
+                <li class="issues"><a href="{{url "issues" }}">Issues</a></li>
+                <li class="tags"><a href="{{url "tags" }}">Tags</a></li>
+                <li class="history"><a href="{{url "history" }}">History</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="right"></div>
+```
+
+```css
+.content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+}
+
+.content .left {
+    width: 200px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.content .right {
+    float: left;
+    position: absolute;
+    left: 200px;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    padding: 20px;
+}
+
+.content .left .navbar-inner {
+    padding-left: 0;
+    padding-right: 0;
+    width: 200px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.content .left li {
+    float: none;
+    width: 200px;
+}
+
+.content .left .navbar {
+    margin-bottom: 0;
+}
+
+.content .left .navbar,
+.content .left .nav,
+.content .left .navbar-inner {
+    margin-bottom: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+```
+
+Note that we are calling two functions from the `ContentView`: `getContentElement()` and `selectMenu()`.
+Lets code them:
+
+```js
+define([
+    'spoon/View',
+    'jquery',
+    'handlebars',
+    'text!./assets/tmpl/content.html',
+    'css!./assets/css/content.css'
+], function (View, $, Handlebars, tmpl) {
+
+    'use strict';
+
+    return View.extend({
+        $name: 'ContentView',
+
+        _element: 'div.content',
+        _template: Handlebars.compile(tmpl),
+
+        /**
+         * Returns the element in which the right content will be shown.
+         *
+         * @return {Object} The jQuery element
+         */
+        getContentElement: function () {
+            return this._element.find('.right');
+        },
+
+        /**
+         * Sets the active menu.
+         *
+         * @param {String} item The item to activate, valid ones are "code", "issues", "tags" and "history"
+         */
+        selectMenu: function (item) {
+            this._element.find('.active').removeClass('active');
+            this._element.find('.' + item).addClass('active');
+        }
+    });
+});
+```
 
 Before handling the upcast event lets create the state that will be used to show the `inner` application interface that has the menu and the content.
 
