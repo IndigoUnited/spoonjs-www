@@ -199,18 +199,22 @@ _innerState: function (state) {
 In the `inner` state, the user has the ability to browse the repository, checking out the code, issues, tags, etc.
 
 Since this part of the application is somewhat complex, lets do it in a separate module named `Content`.  
-To create a module, you can also use the `CLI` with `spoon module create <name>`. For the name field, type in `content`. The generated module comes with a controller, a view and a few assets.
+To create a module, you can also use the `CLI` by executing `spoon module create <name>`. For the name field, type in `content`. The generated module comes with a controller, a view and a few assets.
 
 If you analyse the second mockup carefully, you can identify two separate areas: the menu on the left and the current menu item being shown on the right.
 We can easily structure our app thanks to the hierarchical states. In this case, our generated `ContentController` will have a state for each menu on the left.
-In each state, we will ensure that the selected menu is the correct use a view or another module to setup the selected content on the right side.
+In each state, we must ensure that:
 
-In this case, we will create a module for each menu item:
+- The current selected menu on the left is the correct one
+- Destroy and create the interface to be shown on the right
+
+The content shown on the right can also be somewhat complex, therefore we will generate a separate module for each one:
 
 - `spoon module create Content/Code`
 - `spoon module create Content/Issues`
 - `spoon module create Content/Tags`
 - `spoon module create Content/History`
+
 
 Now lets setup the `ContentController` to do what as been described above:
 
@@ -316,26 +320,30 @@ define([
         }
     });
 });
-
 ```
 
-Next lets add some HTML and css in the `ContentView` template and css files:
+Next lets add some HTML and CSS in the `ContentView` template and css files:
 
 ```html
 <div class="left">
-    <div class="navbar navbar-inverse">
-        <div class="navbar-inner">
-            <ul class="nav">
-                <li class="code"><a href="{{url "code" }}">Code</a></li>
-                <li class="issues"><a href="{{url "issues" }}">Issues</a></li>
-                <li class="tags"><a href="{{url "tags" }}">Tags</a></li>
-                <li class="history"><a href="{{url "history" }}">History</a></li>
-            </ul>
-        </div>
+    <div class="back">
+        <a class="btn btn-small" href="{{url "/home" }}"><i class="icon-chevron-left"></i> Back</a>
     </div>
+    <ul class="nav nav-list">
+        <li class="nav-header">repo-browser</li>
+        <li class="code"><a href="{{url "code" }}">Code</a></li>
+        <li class="issues"><a href="{{url "issues" }}">Issues</a></li>
+        <li class="tags"><a href="{{url "tags" }}">Tags</a></li>
+        <li class="history"><a href="{{url "history" }}">History</a></li>
+    </ul>
 </div>
 <div class="right"></div>
 ```
+
+Note that we are using the Handlebars `url` helper that `SpoonJS` provides to generate an URL for a state. For other template engines, a `$url` function is also provided that does exactly the same.
+
+While we haven't yet associated any state to an URL, it will still work out. If your curious, hover the links to see what has been generated. Later we will learn how to map states to URLs. For the back button we have prefixed it with `/`. When a state starts with a `/`, it means it is absolute.
+
 
 ```css
 .content {
@@ -347,10 +355,12 @@ Next lets add some HTML and css in the `ContentView` template and css files:
 }
 
 .content .left {
-    width: 200px;
+    width: 199px;
     position: absolute;
     top: 0;
     bottom: 0;
+    background: #EEE;
+    border-right: 1px solid #CCC;
 }
 
 .content .right {
@@ -363,33 +373,16 @@ Next lets add some HTML and css in the `ContentView` template and css files:
     padding: 20px;
 }
 
-.content .left .navbar-inner {
-    padding-left: 0;
-    padding-right: 0;
-    width: 200px;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
+.content .left .nav {
+    margin-top: 20px;
 }
 
-.content .left li {
-    float: none;
-    width: 200px;
-}
-
-.content .left .navbar {
-    margin-bottom: 0;
-}
-
-.content .left .navbar,
-.content .left .nav,
-.content .left .navbar-inner {
-    margin-bottom: 0;
-    position: absolute;
-    top: 0;
-    bottom: 0;
+.content .left .back {
+    margin-top: 15px;
+    margin-left: 15px;
 }
 ```
+
 
 Note that we are calling two functions from the `ContentView`: `getContentElement()` and `selectMenu()`.
 Lets code them:
@@ -433,13 +426,35 @@ define([
 });
 ```
 
-Before handling the upcast event lets create the state that will be used to show the `inner` application interface that has the menu and the content.
+Now that we have our `Content` module pretty much ready, lets instantiate it in the `inner` state of the `ApplicationController`.
+Note that you must require it in the `define` statement at the top of the file.
 
-To create a module, you can also use the `CLI` with `spoon module create <name>`. For the name field, type in `Content/Issues`. This will create a module named `Issues` in the `src/Content` folder. The generated module comes with a controller, a view and a few assets.
+```js
+/**
+ * Inner state handler.
+ *
+ * @param {Object} state The state parameter bag
+ */
+_innerState: function (state) {
+    this._destroyContent();
 
-If you open up the `IssuesController` in your editor, you will see that it comes with just one state, the `index` one. It simply instantiates and renders the `IssuesView`, that is associated with the `assets/tmpl/issues.html`.
+    this._content = this._link(new ContentController('#content'));
+    this._content.setState(state);
+}
+```
 
-First, open up the `issues.html` template and type something there so we can see some stuff being rendered. Next, let's connect the `ApplicationController` to this new module.
+Note that we call the `setState` on the child controller. This is basically telling the `ContentController` that we are done handling this part of the state and it's up to him to handle the rest.
+
+And thats it! We easily scaffolded, bootstrapped and connected quite a few modules of our application in a very rapid way. But most importantly you got a feeling of organisation and separation of concerns thanks to the modular approach of the framework.
+
+
+## Issues list
+
+Next, we will work on the list of issues of a repository.
+
+
+## Issues details
+
 
 [1] Sublime!
 [2]
