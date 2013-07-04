@@ -132,6 +132,41 @@ define(['spoon/Controller'], function (Controller) {
             this.setState('../home');
             // Will change the global state to the root controller's home state
             this.setState('/home');
+        }
+    });
+
+    return MyController;
+});
+```
+
+## controller.delegateState()
+
+`public method` _delegateState(state)_
+
+Delegates a state to be handled by the controller.
+
+
+**Parameters**
+
+|                    |          |                                                              |
+| ------------------ | -------- | ------------------------------------------------------------ |
+| state (optional)   | ...mixed | The state parameter bag or instance                          |
+
+**Returns**
+
+Controller - The instance itself to allow chaining.
+
+
+```js
+define(['spoon/Controller'], function (Controller) {
+    var MyController = Controller.extend({
+        _states: {
+            'index': 'index',
+            'edit(id)': 'edit'
+        },
+
+        index: function () {
+            //..
         },
 
         edit: function (state) {
@@ -140,11 +175,11 @@ define(['spoon/Controller'], function (Controller) {
             }
 
             this._editModule = new EditModuleController();
-            // Push the state to to the child controller
+            // Delegate the state to to the child controller
             // Note that the state argument is the state parameter bag that
             // contains not only the state parameters but also additional data
             // about the state itself used internally by the framework
-            this._editModule.setState(state);
+            this._editModule.delegateState(state);
         }
     });
 
