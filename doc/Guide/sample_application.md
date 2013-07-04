@@ -215,7 +215,6 @@ The content shown on the right can also be somewhat complex, therefore we will g
 - `spoon module create Content/Tags`
 - `spoon module create Content/History`
 
-
 Now lets setup the `ContentController` to do what as been described above:
 
 ```js
@@ -245,15 +244,21 @@ define([
          * Constructor.
          *
          * @param {Element} element The element in which the module will work on
+         * @param {String}  org     The GitHub org
+         * @param {String}  repo    The GitHub repo
          */
-        initialize: function (element) {
+        initialize: function (element, org, repo) {
             Controller.call(this);
+
+            this._org = org;
+            this._repo = repo;
 
             this._view = this._link(new ContentView());
             this._view.appendTo(element);
 
             this.once('link', function () {
                 this._view.render();
+                this._rightElement = this._view.getContentElement();
             }.bind(this));
         },
 
@@ -266,8 +271,8 @@ define([
             this._view.selectMenu('code');
             this._destroyContent();
 
-            this._content = this._link(new CodeController(this._view.getContentElement()));
-            this._content.setState(state);
+            this._content = this._link(new CodeController(this._rightElement, this._org, this._repo));
+            this._content.delegateState(state);
         },
 
         /**
@@ -279,8 +284,8 @@ define([
             this._view.selectMenu('issues');
             this._destroyContent();
 
-            this._content = this._link(new IssuesController(this._view.getContentElement()));
-            this._content.setState(state);
+            this._content = this._link(new IssuesController(this._rightElement, this._org, this._repo));
+            this._content.delegateState(state);
         },
 
         /**
@@ -292,8 +297,8 @@ define([
             this._view.selectMenu('tags');
             this._destroyContent();
 
-            this._content = this._link(new TagsController(this._view.getContentElement()));
-            this._content.setState(state);
+            this._content = this._link(new TagsController(this._rightElement, this._org, this._repo));
+            this._content.delegateState(state);
         },
 
         /**
@@ -305,8 +310,8 @@ define([
             this._view.selectMenu('history');
             this._destroyContent();
 
-            this._content = this._link(new HistoryController(this._view.getContentElement()));
-            this._content.setState(state);
+            this._content = this._link(new HistoryController(this._rightElement, this._org, this._repo));
+            this._content.delegateState(state);
         },
 
         /**
@@ -381,6 +386,11 @@ While we haven't yet associated any state to an URL, it will still work out. If 
     margin-top: 15px;
     margin-left: 15px;
 }
+
+.content .right > * {
+    width: 100%;
+    height: 100%;
+}
 ```
 
 
@@ -438,12 +448,12 @@ Note that you must require it in the `define` statement at the top of the file.
 _innerState: function (state) {
     this._destroyContent();
 
-    this._content = this._link(new ContentController('#content'));
-    this._content.setState(state);
+    this._content = this._link(new ContentController('#content', state.org, state.repo));
+    this._content.delegateState(state);
 }
 ```
 
-Note that we call the `setState` on the child controller. This is basically telling the `ContentController` that we are done handling this part of the state and it's up to him to handle the rest.
+Note that we call the `delegateState` on the child controller. We are basically saying to `ContentController` that we are done handling this part of the state and it's up to him to handle the rest. We have also extracted the `org` and `repo` parameters from the state parameters and passed them the constructor.
 
 And thats it! We easily scaffolded, bootstrapped and connected quite a few modules of our application in a very rapid way. But most importantly you got a feeling of organisation and separation of concerns thanks to the modular approach of the framework.
 
@@ -451,6 +461,9 @@ And thats it! We easily scaffolded, bootstrapped and connected quite a few modul
 ## Issues list
 
 Next, we will work on the list of issues of a repository.
+
+
+
 
 
 ## Issues details
