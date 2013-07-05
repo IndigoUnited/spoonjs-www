@@ -54,7 +54,7 @@ define([
 
             this._view.setActiveMenu('api');
             this._content = this._link(new ApiReferenceController('.app-content'));
-            this._content.setState(state);
+            this._content.delegateState(state);
         },
 
         /**
@@ -67,7 +67,7 @@ define([
 
             this._view.setActiveMenu('guide');
             this._content = this._link(new GuideController('.app-content'));
-            this._content.setState(state);
+            this._content.delegateState(state);
         },
 
 
