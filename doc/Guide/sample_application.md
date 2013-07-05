@@ -13,7 +13,7 @@ By default, the selected menu should be `CODE`.
 
 ![Issues](http://f.cl.ly/items/0K0q1y2t0U21330S2q1u/issues.png)
 
-If the user selects issues, a list of the repository issues is listed. If one gets clicked the issue details is shown.
+If the user selects issues, a list of the repository issues is listed. If one gets clicked the issue details are shown.
 
 
 ![Issue details](http://f.cl.ly/items/333V2X2C3A0H2O1W3x3U/issue_details.png)

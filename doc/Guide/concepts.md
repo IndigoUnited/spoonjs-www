@@ -51,7 +51,7 @@ Keeping this is mind, `SpoonJS` does not offer a solution for the Model in its c
 
 There are to type of events in: DOM events and hierarchy events. The DOM events are managed by views and possibly mapped to meaningful hierarchy events.
 
-For the hierarchy events, there's two different model of events:
+For the hierarchy events, there are two different models of events:
 
 - Upcast events
 
@@ -68,7 +68,7 @@ One of the most complex tasks that developers face when developing applications 
 
 The application state can be distributed, since an interface is usually composed of multiple modules, each with its own state. Due to the complexity of some applications, many state-of-the-art frameworks leave this task to the developer, giving him full flexibility over the state management. Unfortunately, these ad-hoc solutions are often poor, many times taking flexibility away, and the developer ultimately is forced to use *dirty hacks*, to make things work together.
 
-`SpoonJS` offers a complete solution for handling state, without losing flexibility. Each controller declaratively specifies which states it can handle, and provides a handler function per state. How the state is actually is handled is completely up to the developer, giving him full control over the application.
+`SpoonJS` offers a complete solution for handling state, without losing flexibility. Each controller declaratively specifies which states it can handle, and provides a handler function per state. How the state is actually handled is completely up to the developer, giving him full control over the application.
 
 The application state can be described by a simple string in the format `/articles.show(172)`. Lets take a closer look at what it means:
 
@@ -83,7 +83,7 @@ Since your application only know states, you can add the state to routes mapping
 
 ## Services
 
-`SpoonJS` is built upon services three services: `services/address`, `services/state`, `services/broadcaster`.
+`SpoonJS` is built upon three services: `services/address`, `services/state`, `services/broadcaster`.
 
 You will rarely need to access them directly, but they are there in case you need to. These services are easily replaced in case you need to change
 the framework behavior. This gives developers extra flexibility to modify the framework internals. Note that throughout your application, you can build your own services.
