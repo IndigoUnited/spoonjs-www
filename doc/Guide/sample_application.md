@@ -601,7 +601,7 @@ define([
     {{~it.issues :issue}}
     <li class="clearfix">
         <div class="main-info">
-            <div class="title"><a href="{{! it.$url('show') }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
+            <div class="title"><a href="{{! it.$url('details', { nr: issue.number }) }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
             <div class="by">Open by <span class="user">{{! issue.user.login }}</span> {{! issue.created_at }}</div>
         </div>
         <div class="labels">
@@ -681,6 +681,189 @@ The gif is located within the `img` folder of the module. If for some reason, th
 
 ## Issues details
 
+The `details` state is very similar to what's being done in the `index` state in terms of flow. The only thing that changes is the GitHub API request and the view being rendered.
+As such, we will need a new view that will be responsible to render the issue details. To create a view, you can use the `CLI` by executing `spoon view create <name>`. For the name field, type in `Content/Issues/IssueDetails`. This will generate the view as well as its `template` and `css` file.
+
+Let's start by creating the `details` state:
+
+```js
+_states: {
+    'index': '_indexState',
+    'details(nr)': '_detailsState'
+},
+
+//..
+
+/**
+ * Details state handler.
+ *
+ * @param {Object} state The state parameter bag
+ */
+_detailsState: function (state) {
+    this._destroyContent();
+
+    this._content = this._link(new IssueDetailsView());
+    this._content.appendTo(this._element);
+    this._content.loading();
+
+    // Make both details and comments requests
+    $.when(
+        $.get('https://api.github.com/repos/' + this._org + '/' + this._repo + '/issues/' + state.nr),
+        $.get('https://api.github.com/repos/' + this._org + '/' + this._repo + '/issues/' + state.nr + '/comments')
+    ).then(function (first, second) {
+        this._content.render({
+            org: this._org,
+            repo: this._repo,
+            issue: first[0],
+            comments: second[0]
+        });
+    }.bind(this), function () {
+        this._content.error();
+    }.bind(this));
+},
+```
+
+Don't forgot to require the `IssueDetailsView` at the top of the file.
+After, let's code the `IssueDetailsView` and tweak its `template` and `css` file:
+
+```js
+define([
+    'spoon/View',
+    'jquery',
+    'doT',
+    'text!./assets/tmpl/issue_details.html',
+    'css!./assets/css/issue_details.css'
+], function (View, $, doT, tmpl) {
+
+    'use strict';
+
+    return View.extend({
+        $name: 'IssueDetailsView',
+
+        _element: 'div.issue-details',
+        _template: doT.template(tmpl),
+
+        /**
+         * Sets the view state to loading.
+         */
+        loading: function () {
+            this._element.empty();
+            this._element.removeClass('error');
+            this._element.addClass('loading');
+        },
+
+        /**
+         * Sets the view state to error.
+         */
+        error: function () {
+            this._element.html('Oops, something went wrong..');
+            this._element.removeClass('loading');
+            this._element.addClass('error');
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        render: function (data) {
+            this._element.removeClass('loading error');
+
+            return View.prototype.render.call(this, data);
+        }
+    });
+});
+```
+
+```html
+<ul class="breadcrumb">
+  <li><a href="{{! it.$url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
+  <li><a href="{{! it.$url('index') }}">Issues</a> <span class="divider">/</span></li>
+  <li class="active">{{! it.issue.title}}</li>
+</ul>
+
+<div class="issue-box">
+    <div class="user-avatar"><img src="{{! it.issue.user.avatar_url }}" alt="{{! it.issue.user.login }}" /></div>
+    <div class="issue-wrapper">
+        <div class="clearfix">
+            <div class="main-info">
+                <div class="title"><a href="{{! it.$url('details', { nr: it.issue.number }) }}">{{! it.issue.title }}</a> <span class="nr">(#{{! it.issue.number }})</span></div>
+                <div class="by">Open by <span class="user">{{! it.issue.user.login }}</span> {{! it.issue.created_at }}</div>
+            </div>
+            {{ if (it.issue.labels.length) { }}}
+            <div class="labels">
+                <ul>
+                    {{~it.issue.labels :label}}
+                    <li style="background-color: #{{! label.color }}">{{! label.name }}</li>
+                    {{~}}
+                </ul>
+            </div>
+            {{ } }}
+        </div>
+        <div class="body">{{! it.issue.body }}</div>
+    </div>
+</div>
+
+<!-- TODO: render comments -->
+```
+
+```css
+.issue-details.loading {
+    background: url('../img/ajax-loader.gif') no-repeat center center;
+}
+
+.issue-details ul {
+    list-style: none;
+}
+
+.issue-details .issue-box {
+    position: relative;
+}
+
+.issue-details .issue-wrapper {
+    border: 1px solid #e7e7e7;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 3px 0 #eee;
+    border-radius: 3px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 60px;
+}
+
+.issue-details .user-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.issue-details .user-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+}
+
+.issue-details .main-info {
+    float: left;
+}
+
+.issue-details .labels {
+    float: right;
+}
+
+.issue-details .labels li {
+    float: left;
+    border-radius: 3px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.issue-details .body {
+    margin-top: 10px;
+    border-radius: 3px;
+    background: #EEE;
+    padding: 20px;
+}
+```
+
+TODO: comments, date plugin.
 
 
 ## State URLs
@@ -699,7 +882,7 @@ define(function () {
             code: '/',
             issues: {
                 index: '/',
-                show: {
+                details: {
                     $pattern: '/{nr}',
                     $constraints: {
                         nr: /\d+/
