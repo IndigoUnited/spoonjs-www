@@ -675,12 +675,49 @@ define([
 }
 ```
 
-Note that for the `loading` style, we are using an animated gif downloaded from [ajaxload](http://www.ajaxload.info/). Feel free to download one of these animated gifs and adjust the `issues.loading` css class.   
-The gif is located within the `img` folder within the module. If for some reason, this asset is shared across the application, you can locate it whenever you feel appropriate (e.g.: in the Application `assets/img` folder).
+Note that for the `loading` style we are using an animated gif downloaded from [ajaxload](http://www.ajaxload.info/). Feel free to download one of the available animated gifs and adjust the `issues.loading` css class.   
+The gif is located within the `img` folder of the module. If for some reason, this asset is shared across the application, you can store it where you feel more appropriate (e.g.: in the Application `assets/img` folder).
 
 
 ## Issues details
 
 
-[1] Sublime!
-[2]
+
+## State URLs
+
+As mentioned before, you can map state to URLs. This will add support for back & forward buttons, bookmarkable URLs among other things. These mappings can be done in the `app/config/states.js` file.
+
+```js
+define(function () {
+
+    'use strict';
+
+    return {
+        home: '/',
+        inner: {
+            $pattern: '/{org}/{repo}',
+            code: '/',
+            issues: {
+                index: '/',
+                show: {
+                    $pattern: '/{nr}',
+                    $constraints: {
+                        nr: /\d+/
+                    }
+                }
+            },
+            tags: '/tags',
+            history: '/history'
+        }
+    };
+});
+```
+
+Since states are hierarchical, states in this file are declared with nesting. For instance, the state `inner.issues.index` maps exactly to that object key.
+
+There are some special keywords, prefixed with `$`, that have special meaning:
+
+- `$pattern` - Used to specify a pattern other than the assumed key.
+- `$fullPattern` - Used to specify the complete pattern.
+- `$constraints` - Adds validation to pattern parameters; If a constraint fails, the state is not matched.
+- `$order` - Used to specify the match order, since objects do not ensure order. The higher, the more precende they have.
