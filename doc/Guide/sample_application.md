@@ -351,7 +351,9 @@ Note that we are using the `$url` helper that `SpoonJS` provides to generate an 
 <li class="issues"><a href="{{url "issues" }}">Issues</a></li>
 ```
 
-While we haven't yet associated any state to an URL, it will still work out. If your curious, hover the links to see what has been generated. Later we will learn how to map states to URLs. For the back button we have prefixed it with `/`. When a state starts with a `/`, it means it is absolute.
+While we haven't yet associated any state to an URL, the application still works. One of the advantages of mapping URL to states is to make `back` and `forward` browser buttons work. Later we will learn how to do that.
+
+In the html code above, there's a special meaining for the `/home` state. When prefixed with a `/`, it means that we are referencing the a state absolutely. In this case, the root home state.
 
 
 ```css
