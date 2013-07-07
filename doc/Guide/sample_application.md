@@ -67,14 +67,14 @@ define([
     //..
     'css!./assets/css/app.css',
     'css!bootstrap/css/bootstrap.css'
-], function (View, $, Handlebars, tmpl) {
+], function (View, $, doT, tmpl) {
     //..
 });
 ```
 
 
 As explained above, the `ApplicationController` is already rendering a `HomeView`.
-If you open it in your favorite editor[2], you will see that its rendering a `Handlebars` template. While this is the default template engine chosen for the scaffold process, you can change it to whatever you want. The `_template` property expects a function that outputs an HTML string or a DOM element.
+If you open it in your favorite editor[2], you will see that its rendering a `doT` template. While this is the default template engine chosen for the scaffold process, you can change it to whatever you want. The `_template` property expects a function that outputs an HTML string or a DOM element.
 
 Lets change that template to have the initial repository input field and button. Replace `assets/tmpl/home.html`  with:
 
@@ -332,20 +332,24 @@ Next lets add some HTML and CSS in the `ContentView` template and css files:
 ```html
 <div class="left">
     <div class="back">
-        <a class="btn btn-small" href="{{url "/home" }}"><i class="icon-chevron-left"></i> Back</a>
+        <a class="btn btn-small" href="{{! it.$url('/home') }}"><i class="icon-chevron-left"></i> Back</a>
     </div>
     <ul class="nav nav-list">
         <li class="nav-header">repo-browser</li>
-        <li class="code"><a href="{{url "code" }}">Code</a></li>
-        <li class="issues"><a href="{{url "issues" }}">Issues</a></li>
-        <li class="tags"><a href="{{url "tags" }}">Tags</a></li>
-        <li class="history"><a href="{{url "history" }}">History</a></li>
+        <li class="code"><a href="{{! it.$url('code') }}">Code</a></li>
+        <li class="issues"><a href="{{! it.$url('issues') }}">Issues</a></li>
+        <li class="tags"><a href="{{! it.$url('tags') }}">Tags</a></li>
+        <li class="history"><a href="{{! it.$url('history') }}">History</a></li>
     </ul>
 </div>
 <div class="right"></div>
 ```
 
-Note that we are using the Handlebars `url` helper that `SpoonJS` provides to generate an URL for a state. For other template engines, a `$url` function is also provided that does exactly the same.
+Note that we are using the `$url` helper that `SpoonJS` provides to generate an URL for a state. For other template engines, a `$url` function is also provided that does exactly the same. For `Handlebars`, there's a `url` helper that does the same:
+
+```html
+<li class="issues"><a href="{{url "issues" }}">Issues</a></li>
+```
 
 While we haven't yet associated any state to an URL, it will still work out. If your curious, hover the links to see what has been generated. Later we will learn how to map states to URLs. For the back button we have prefixed it with `/`. When a state starts with a `/`, it means it is absolute.
 
@@ -401,10 +405,10 @@ Lets code them:
 define([
     'spoon/View',
     'jquery',
-    'handlebars',
+    'doT',
     'text!./assets/tmpl/content.html',
     'css!./assets/css/content.css'
-], function (View, $, Handlebars, tmpl) {
+], function (View, $, doT, tmpl) {
 
     'use strict';
 
@@ -412,7 +416,7 @@ define([
         $name: 'ContentView',
 
         _element: 'div.content',
-        _template: Handlebars.compile(tmpl),
+        _template: doT.template(tmpl),
 
         /**
          * Returns the element in which the right content will be shown.
@@ -460,10 +464,217 @@ And thats it! We easily scaffolded, bootstrapped and connected quite a few modul
 
 ## Issues list
 
-Next, we will work on the list of issues of a repository.
+Next, we will work on the list of issues of a repository. As such, we will work on the isolated `Issues` module we created before.
+Since you are getting familiar with `SpoonJS`, you should spot that the `IssuesController` will have two states: one for listing the issues and another to show the details of a particular issues. More states could be implemented later, for instance, a search state in case we had the functionality to search the list of issues.
 
+Having this said, let's create the `index` state:
 
+```js
+define([
+    'spoon/Controller',
+    './IssuesView',
+    'jquery'
+], function (Controller, IssuesView, $) {
 
+    'use strict';
+
+    return Controller.extend({
+        $name: 'IssuesController',
+
+        _defaultState: 'index',
+        _states: {
+            'index': '_indexState'
+        },
+
+        /**
+         * Constructor.
+         *
+         * @param {Element} element The element in which the module will work on
+         * @param {String}  org     The GitHub org
+         * @param {String}  repo    The GitHub repo
+         */
+        initialize: function (element, org, repo) {
+            Controller.call(this);
+
+            this._element = element;
+            this._org = org;
+            this._repo = repo;
+        },
+
+        /**
+         * Index state handler.
+         *
+         * @param {Object} state The state parameter bag
+         */
+        _indexState: function (state) {
+            this._destroyContent();
+
+            this._content = this._link(new IssuesView());
+            this._content.appendTo(this._element);
+            this._content.loading();
+
+            $.get('https://api.github.com/repos/' + this._org + '/' + this._repo + '/issues')
+            .then(function (data) {
+                this._content.render({
+                    org: this._org,
+                    repo: this._repo,
+                    issues: data
+                });
+            }.bind(this), function () {
+                this._content.error();
+            }.bind(this));
+        },
+
+        /**
+         * Destroys the current content if any.
+         */
+        _destroyContent: function () {
+            if (this._content) {
+                this._content.destroy();
+                this._content = null;
+            }
+        }
+    });
+});
+```
+
+The `index` state instantiates the `IssuesView`, putting it into loading state. Afterwards, the issues from the repository are fetched through an `AJAX` call. Note that we advise users to create a `model` layer that is responsible to do these kind of requests but we will skip that for the sake of simplicity. When the request is done and succeeds, we call render with the array of issues, otherwise we put the `IsusesView` into the error state.
+
+As seen above, we need to implement the `loading()` and `error()` methods in the `IssuesView` as well its template and some styles to make the list look like the mockups:
+
+```js
+define([
+    'spoon/View',
+    'jquery',
+    'doT',
+    'text!./assets/tmpl/issues.html',
+    'css!./assets/css/issues.css'
+], function (View, $, doT, tmpl) {
+
+    'use strict';
+
+    return View.extend({
+        $name: 'IssuesListView',
+
+        _element: 'div.issues',
+        _template: doT.template(tmpl),
+
+        /**
+         * Sets the view state to loading.
+         */
+        loading: function () {
+            this._element.empty();
+            this._element.removeClass('error');
+            this._element.addClass('loading');
+        },
+
+        /**
+         * Sets the view state to error.
+         */
+        error: function () {
+            this._element.html('Oops, something went wrong..');
+            this._element.removeClass('loading');
+            this._element.addClass('error');
+        },
+
+        /**
+         * {@inheritDoc}
+         */
+        render: function (data) {
+            this._element.removeClass('loading error');
+
+            return View.prototype.render.call(this, data);
+        }
+    });
+});
+```
+
+```html
+<ul class="breadcrumb">
+  <li><a href="{{! it.$url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
+  <li class="active">Issues</li>
+</ul>
+
+<ul class="issues-list">
+    {{~it.issues :issue}}
+    <li class="clearfix">
+        <div class="main-info">
+            <div class="title"><a href="{{! it.$url('show') }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
+            <div class="by">Open by <span class="user">{{! issue.user.login }}</span> {{! issue.created_at }}</div>
+        </div>
+        <div class="labels">
+            <ul>
+                {{~issue.labels :label}}
+                <li style="background-color: #{{! label.color }}">{{! label.name }}</li>
+                {{~}}
+            </ul>
+        </div>
+    </li>
+    {{~}}
+</ul>
+```
+
+```css
+.issues.loading {
+    background: url('../img/ajax-loader.gif') no-repeat center center;
+}
+
+.issues ul {
+    list-style: none;
+    margin: 0;
+}
+
+.issues .issues-list {
+    margin-top: 30px;
+}
+
+.issues .issues-list > li {
+    border: 1px solid #e7e7e7;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 1px 3px 0 #eee;
+    border-radius: 3px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.issues .issues-list > li:first-child {
+    margin-top: 0;
+}
+
+.issues .issues-list .main-info {
+    float: left;
+}
+
+.issues .issues-list .title {
+    font-size: 20px;
+}
+
+.issues .issues-list .nr {
+    font-size: 15px;
+}
+
+.issues .issues-list .by {
+    color: #666;
+}
+
+.issues .issues-list .user {
+    color: #0088CC;
+}
+
+.issues .issues-list .labels {
+    float: right;
+}
+
+.issues .issues-list .labels li {
+    float: left;
+    border-radius: 3px;
+    padding: 10px;
+    margin-left: 10px;
+}
+```
+
+Note that for the `loading` style, we are using an animated gif downloaded from [ajaxload](http://www.ajaxload.info/). Feel free to download one of these animated gifs and adjust the `issues.loading` css class.   
+The gif is located within the `img` folder within the module. If for some reason, this asset is shared across the application, you can locate it whenever you feel appropriate (e.g.: in the Application `assets/img` folder).
 
 
 ## Issues details
