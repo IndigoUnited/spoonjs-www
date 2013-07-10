@@ -32,16 +32,16 @@ see a congratulations message.
 
 What just happen?
 
-1 - The `CLI` has scaffolded a new project based on [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD). If you are not familiar with it, we advice to read it to be able to understand some parts of this guide.
+1 - The `CLI` has scaffolded a new project based on [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD). If you are not familiar with it, we advise you to read it to be able to understand some parts of this guide.
 
 2 - A server running the `dev` environment has been spawned. Under the hood, `spoon project run` executed the `automaton`[1] task located in `tasks/server`. This gives you freedom to tweak that task to fulfill your project needs.
 
-3 - When you opened the link, the application has been bootstrapped by the `ApplicationController`. If you check out its code, you easily see that it started in the `home` state that simply renders the the `HomeView` which has the congratulations message you have seen.
+3 - When you opened the link, the application has been bootstrapped by the `ApplicationController`. If you check out its code, you can easily see that it started in the `home` state that simply renders the the `HomeView` which has the congratulations message you have seen.
 
 
 ## Home screen
 
-To ease out the process of having some styles and UI components, we will include [Bootstrap](http://twitter.github.io/bootstrap/) from twitter. `SpoonJS` advices you to work with [Bower](http://bower.io) to manage your dependencies. You can install it with `npm install -g bower`. Then, type `bower install --save components-bootstrap`. The `save` flag will save the dependency into the `bower.json` file located in your project root folder. Afterwards, lets include `bootstrap` it in our `AMD` loader configuration by opening the `app/loader.js` file and adding:
+To ease out the process of having some styles and UI components, we will include [Bootstrap](http://twitter.github.io/bootstrap/) from twitter. `SpoonJS` advises you to work with [Bower](http://bower.io) to manage your dependencies. You can install it with `npm install -g bower`. Then, type `bower install --save components-bootstrap`. The `save` flag will save the dependency into the `bower.json` file located in your project root folder. Afterwards, lets include `bootstrap` it in our `AMD` loader configuration by opening the `app/loader.js` file and adding:
 
 ```js
     //..
@@ -82,12 +82,14 @@ Lets change that template to have the initial repository input field and button.
 <div class="wrapper">
     <h1>repo-browser</h1>
 
-    <div class="input-append">
-        <input class="input-xlarge" type="text" placeholder="git://github.com/org/repo.git">
+    <div class="control-group input-append">
+        <input class="input-xlarge" type="text" placeholder="git://github.com/org/repo.git" value="">
         <button class="btn" type="button">Go!</button>
     </div>
 </div>
 ```
+
+**NOTE:** We advise you to place a valid repository in the `value` property when pasting the example above in the home.html. This way you will always have a repository to test every time you reload the page without having to be filling the input every time.
 
 Lets also tweek the appearance by adding the styles below to `assets/css/home.css`.   
 Since the `_element` property of the `HomeView` is `div.home` we can style the view easily.
@@ -148,6 +150,8 @@ _onBtnClick: function (e, el) {
 //..
 ```
 
+NOTE: Don't forget to get your application running by typing : `spoon project run`. You can optionally give a specific port in which the application will run. To do so, just add the parameter `--port or -p`. Also remind that, to check on browser console, you may have to install `add-ons` or similar in order for that to run. 
+
 The `_upcast` function allows you to emit events upwards the hierarchy chain. If you open up your browser console, you should see an unhandled event reported by the framework. This occurs because no one is handling the `go` event yet. Note that we access `this._element` to to look for the input. That property is a reference to the `jquery` element of the view.
 
 ```
@@ -158,7 +162,7 @@ Unhandled upcast event "go".
 To listen for the `go` event, lets attach a listener to the view instance in the `ApplicationController`.
 
 ```js
-//.. code inside the index state handler..
+//.. code inside the home state handler..
 this._content.render();
 
 this._content.on('go', function (target) {
@@ -166,7 +170,7 @@ this._content.on('go', function (target) {
 }.bind(this));
 ```
 
-In this case, we want to transition to another state which we will name `inner`. This state will be responsible for initializing the interface you see in the second mockup. If you click on the `Go` button now you should see a warning:
+In this case, we want to switch to another state which we will name `inner`. This state will be responsible for initializing the interface you see in the second mockup. If you click on the `Go` button now you should see a warning:
 
 ```
 Unhandled state "inner" on controller "ApplicationController".
@@ -199,7 +203,7 @@ _innerState: function (state) {
 In the `inner` state, the user has the ability to browse the repository, checking out the code, issues, tags, etc.
 
 Since this part of the application is somewhat complex, lets do it in a separate module named `Content`.  
-To create a module, you can also use the `CLI` by executing `spoon module create <name>`. For the name field, type in `content`. The generated module comes with a controller, a view and a few assets.
+To create a module, you can also use the `CLI` by executing `spoon module create <name>`. For the name field, type in `Content`. The generated module comes with a controller, a view and a few assets.
 
 If you analyse the second mockup carefully, you can identify two separate areas: the menu on the left and the current menu item being shown on the right.
 We can easily structure our app thanks to the hierarchical states. In this case, our generated `ContentController` will have a state for each menu on the left.
@@ -215,7 +219,7 @@ The content shown on the right can also be somewhat complex, therefore we will g
 - `spoon module create Content/Tags`
 - `spoon module create Content/History`
 
-Now lets setup the `ContentController` to do what as been described above:
+Now lets setup the `ContentController` to do what has been described above:
 
 ```js
 define([
@@ -345,16 +349,17 @@ Next lets add some HTML and CSS in the `ContentView` template and css files:
 <div class="right"></div>
 ```
 
-Note that we are using the `$url` helper that `SpoonJS` provides to generate an URL for a state. For other template engines, a `$url` function is also provided that does exactly the same. For `Handlebars`, there's a `url` helper that does the same:
+Note that we are using the `$url` helper that `SpoonJS` provides to generate an URL for a state. For other template engines, a `$url` function is also provided that does exactly the same. For `Handlebars`, there's a `url` helper that does the same. It follows just as a reference:
 
 ```html
 <li class="issues"><a href="{{url "issues" }}">Issues</a></li>
 ```
 
-While we haven't yet associated any state to an URL, the application still works. One of the advantages of mapping URL to states is to make `back` and `forward` browser buttons work. Later we will learn how to do that.
+While we haven't yet associated any state to an URL, the application still works. One of the advantages of mapping URL to states is to make `back` and `forward` browser buttons work. Later on we will learn how to do that.
 
-In the html code above, there's a special meaining for the `/home` state. When prefixed with a `/`, it means that we are referencing the a state absolutely. In this case, the root home state.
+In the html code above, there's a special meaning for the `/home` state. When prefixed with a `/`, it means that we are referencing the a state absolutely. In this case, the root home state.
 
+Ok, so let's define css file for the assets/css/content.css :
 
 ```css
 .content {
@@ -400,7 +405,7 @@ In the html code above, there's a special meaining for the `/home` state. When p
 ```
 
 
-Note that we are calling two functions from the `ContentView`: `getContentElement()` and `selectMenu()`.
+Note that we will be calling two functions from the `ContentView`: `getContentElement()` and `selectMenu()`.
 Lets code them:
 
 ```js
@@ -443,7 +448,18 @@ define([
 ```
 
 Now that we have our `Content` module pretty much ready, lets instantiate it in the `inner` state of the `ApplicationController`.
-Note that you must require it in the `define` statement at the top of the file.
+
+**NOTE:** You must require it in the `define` statement at the top of the file.
+
+```js
+define([
+    'spoon/Controller',
+    './ApplicationView',
+    './HomeView',
+    './../Content/ContentController'
+], function (Controller, ApplicationView, HomeView, ContentController) {
+ ...
+```
 
 ```js
 /**
@@ -459,7 +475,7 @@ _innerState: function (state) {
 }
 ```
 
-Note that we call the `delegateState` on the child controller. We are basically saying to `ContentController` that we are done handling this part of the state and it's up to him to handle the rest. We have also extracted the `org` and `repo` parameters from the state parameters and passed them the constructor.
+Note that we call the `delegateState` on the child controller. We are basically saying to `ContentController` that we are done handling this part of the state and it's up to him to handle the rest. We have also extracted the `org` and `repo` parameters from the state parameters and passed them to the constructor.
 
 And thats it! We easily scaffolded, bootstrapped and connected quite a few modules of our application in a very rapid way. But most importantly you got a feeling of organisation and separation of concerns thanks to the modular approach of the framework.
 
@@ -467,7 +483,7 @@ And thats it! We easily scaffolded, bootstrapped and connected quite a few modul
 ## Issues list
 
 Next, we will work on the list of issues of a repository. As such, we will work on the isolated `Issues` module we created before.
-Since you are getting familiar with `SpoonJS`, you should spot that the `IssuesController` will have two states: one for listing the issues and another to show the details of a particular issues. More states could be implemented later, for instance, a search state in case we had the functionality to search the list of issues.
+Since you are getting familiar with `SpoonJS`, you should spot that the `IssuesController` will have two states: one for listing the issues and another to show the details of a particular issue. More states could be implemented later, for instance, a search state in case we had the functionality to search the list of issues.
 
 Having this said, let's create the `index` state:
 
@@ -540,9 +556,11 @@ define([
 });
 ```
 
-The `index` state instantiates the `IssuesView`, putting it into loading state. Afterwards, the issues from the repository are fetched through an `AJAX` call. Note that we advise users to create a `model` layer that is responsible to do these kind of requests but we will skip that for the sake of simplicity. When the request is done and succeeds, we call render with the array of issues, otherwise we put the `IsusesView` into the error state.
+The `index` state instantiates the `IssuesView`, putting it into loading state. Afterwards, the issues from the repository are fetched through an `AJAX` call. Note that we advise users to create a `model` layer that is responsible to do these kind of requests but we will skip that for the sake of simplicity. When the request is done and succeeds, we call render with the array of issues, otherwise we put the `IsusesView` into error state.
 
-As seen above, we need to implement the `loading()` and `error()` methods in the `IssuesView` as well its template and some styles to make the list look like the mockups:
+**NOTE:** In order to keep this example simple as it should be, we'll not be dealing with pagination. Since git API returns chuncked data accessible through an offset and a limit, we'll keep our focus into just the first set of data received and we'll be displaying a flat array of elements not going deep into all results that git might have available. 
+
+As seen above, we need to implement the `loading()` and `error()` methods in the `IssuesView` as well as its template and some styles to make the list look like the mockups:
 
 ```js
 define([
@@ -556,7 +574,7 @@ define([
     'use strict';
 
     return View.extend({
-        $name: 'IssuesListView',
+        $name: 'IssuesView',
 
         _element: 'div.issues',
         _template: doT.template(tmpl),
@@ -676,7 +694,7 @@ define([
 ```
 
 Note that for the `loading` style we are using an animated gif downloaded from [ajaxload](http://www.ajaxload.info/). Feel free to download one of the available animated gifs and adjust the `issues.loading` css class.   
-The gif is located within the `img` folder of the module. If for some reason, this asset is shared across the application, you can store it where you feel more appropriate (e.g.: in the Application `assets/img` folder).
+The gif is located within the `img` folder of the module (repo-browser/src/Content/Issues/assets/img). If for some reason, this asset is shared across the application, you can store it where you feel more appropriate (e.g.: in the Application `assets/img` folder).
 
 
 ## Issues details
@@ -684,7 +702,7 @@ The gif is located within the `img` folder of the module. If for some reason, th
 The `details` state is very similar to what's being done in the `index` state in terms of flow. The only thing that changes is the GitHub API request and the view being rendered.
 As such, we will need a new view that will be responsible to render the issue details. To create a view, you can use the `CLI` by executing `spoon view create <name>`. For the name field, type in `Content/Issues/IssueDetails`. This will generate the view as well as its `template` and `css` file.
 
-Let's start by creating the `details` state:
+Let's start by creating the `details` state in the `IssuesController`:
 
 ```js
 _states: {
@@ -720,10 +738,21 @@ _detailsState: function (state) {
     }.bind(this), function () {
         this._content.error();
     }.bind(this));
-},
+}
 ```
 
-Don't forgot to require the `IssueDetailsView` at the top of the file.
+**Don't forget** to require the `IssueDetailsView` at the top of the file.
+
+```js
+define([
+    'spoon/Controller',
+    './IssuesView',
+    './IssueDetailsView',
+    'jquery'
+], function (Controller, IssuesView, IssueDetailsView, $) {
+ ... 
+```
+
 After, let's code the `IssueDetailsView` and tweak its `template` and `css` file:
 
 ```js
@@ -802,7 +831,23 @@ define([
     </div>
 </div>
 
-<!-- TODO: render comments -->
+{{ if (it.issue.comments > 0) { }}
+<div class="issue-details issue-wrapper comments-total">{{! it.issue.comments}} comment{{ if (it.issue.comments > 1) { }}s{{ } }}</div>
+<div>
+    {{~it.comments :comment}}
+        <div class="issue-box">
+            <div class="issue-wrapper">
+                <div class="clearfix">
+                    <div class="main-info">
+                        <div class="by"><span class="user comment">comment by</span> <span class="user">{{! comment.user.login }}</span> {{! comment.created_at }}</div>
+                    </div>
+                </div>
+                <div class="body">{{! comment.body }}</div>
+            </div>
+        </div>
+    {{~}}    
+</div>
+{{ } }}
 ```
 
 ```css
@@ -861,14 +906,25 @@ define([
     background: #EEE;
     padding: 20px;
 }
+
+.user {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.user.comment {
+    color: #0088CC;
+    font-weight: normal;
+}
+
+.comments-total {
+    color: #D96868;
+}
 ```
-
-TODO: comments, date plugin.
-
 
 ## State URLs
 
-As mentioned before, you can map state to URLs. This will add support for back & forward buttons, bookmarkable URLs among other things. These mappings can be done in the `app/config/states.js` file.
+As mentioned before, you can map states to URLs. This will add support for back & forward buttons, bookmarkable URLs among other things. These mappings can be done in the `app/config/states.js` file.
 
 ```js
 define(function () {
@@ -898,9 +954,191 @@ define(function () {
 
 Since states are hierarchical, states in this file are declared with nesting. For instance, the state `inner.issues.index` maps exactly to that object key.
 
-There are some special keywords, prefixed with `$`, that have special meaning:
+There are some special keywords, prefixed with `$`, that have special meanings:
 
 - `$pattern` - Used to specify a pattern other than the assumed key.
 - `$fullPattern` - Used to specify the complete pattern.
 - `$constraints` - Adds validation to pattern parameters; If a constraint fails, the state is not matched.
 - `$order` - Used to specify the match order, since objects do not ensure order. The higher, the more precende they have.
+
+As we can see, there is a state that depends on 2 parameters `org` and `repo`.
+This means that if either one changes, the state handler will be run. 
+**NOTE** If a state is transitioned to itself, nothing will be done. 
+
+Now try to run the application and access the issues list. 
+_Did it work?_
+
+As you could see in the browser console, the application failed to run, giving an error:
+
+```
+Error: Missing param "org".
+    throw new Error('Missing param "' + placeholderName + '".');
+```
+
+This happened precisely because the inner state depends on those two parameters we previously refered to. So, in order this to run, you'll have to inform your `ApplicationController` state `inner` that it should expect parameters. 
+
+```js
+    _states: {
+        'home': '_homeState',
+        'inner(org, repo)': '_innerState'
+    },
+```
+
+**NOTE:** As you can recall, in 'Content/assets/tmpl/content.html' when defining the state urls, you did not define any additional parameters to that states, and you shouldn't either. It's up to `SpoonJS` framework to handle the state and understand that, somewhere up in the hierarchy, there are parameters that need to be added to the state (and are part of it) regardless you map or not the state to an URL representation.
+
+# Extras
+
+## Date Plugin
+
+As you could see when you ran the application, the date fields were not very user friendly, so now we're placing a possible solution to overcome that situation. For this example application we'll be using a jquery plugin called `timeago` that will allow us to see dates as time references. e.g. `1 minute ago`. More information can be seen here: [http://timeago.yarp.com/](http://timeago.yarp.com/)
+
+To install the plugin into your application, you should ùse `bower` to install the dependencies. If you're having trouble remembering the full name of the dependency you want to install, you can query `bower` for a specific string by typing `bower search time`, that will outcome :
+
+```
+Search results:
+    ...
+    jquery-timeago git://github.com/rmm5t/jquery-timeago.git
+    ...
+```
+
+By looking at the results you can see that the plugin we're looking for is available, so let's install it locally into our sample application. Let's also add the `save` option to include the dependency into our project. 
+
+```
+bower install jquery-timeago --save
+```
+
+Now we have component installed, he have to add it to the application loader `app/loader.js` so it will be avaiable globally to all modules. With this said :
+
+```
+paths: {
+        ...
+        'bootstrap': '../components/components-bootstrap',
+        'jquery-timeago': '../components/jquery-timeago/jquery.timeago'
+    },
+    shim: {
+        'bootstrap/js/bootstrap': {
+            deps: ['jquery'],
+            exports: '$'
+        },
+        'jquery-timeago': {
+            deps: ['jquery'],
+            exports: '$'
+        }
+    },
+    ...
+```
+
+Notice that, since jquery-timeago needs jquery to be loaded in order for it to work, we have to "shim it", so the shim configuration is needed above where we read that our plugin depends on jquery being loaded and exported as '$' variable. 
+
+Now let's put things to work. We'll start by the issues list. So the new html for the `src/Content/Issues/assets/tmpl/issues.html` will be:
+
+```html
+<ul class="breadcrumb">
+  <li><a href="{{! it.$url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
+  <li class="active">Issues</li>
+</ul>
+
+<ul class="issues-list">
+    {{~it.issues :issue}}
+    <li class="clearfix">
+        <div class="main-info">
+            <div class="title"><a href="{{! it.$url('details', { nr: issue.number }) }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
+            <div class="by">Open by <span class="user">{{! issue.user.login }}</span> <abbr class="timeago" title="{{! issue.created_at }}">{{! issue.created_at }}</abbr></div>
+        </div>
+        <div class="labels">
+            <ul>
+                {{~issue.labels :label}}
+                <li style="background-color: #{{! label.color }}">{{! label.name }}</li>
+                {{~}}
+            </ul>
+        </div>
+    </li>
+    {{~}}
+</ul>
+```
+
+With this new html, we'll be able to apply the plugin to the date fields. 
+**NOTE:** When the plugin is first applied to a field, it starts a timer that fires periodically thus updating the time info seen by the end users. 
+
+We also need to performe some changes in the `IssuesView`. These changes will be responsible for updating the date fields we've defined previously in the html file. Basically, all we need to do is to import the plugin into the view and when rendering the template, apply the plugin to the respective fields. 
+
+```js
+define([
+    'spoon/View',
+    'jquery',
+    'doT',
+    'text!./assets/tmpl/issues.html',
+    'css!./assets/css/issues.css',
+    'jquery-timeago'
+], function (View, $, doT, tmpl) {
+ ...
+```
+
+The plugin import is the last in the queue because we chose to and we advise it to be like so. You can also see that we don't require the variable the variable as function parameters. This is because we don't a specific variable to that plugin since it's already bound to jquery, so we only need to use '$' and we have access to the plugin features and functions. 
+
+By now, we only need to update the `render` function in the `IssuesView`.
+
+```js
+    /**
+     * {@inheritDoc}
+     */
+    render: function (data) {
+        this._element.removeClass('loading error');
+
+        // just render the view, without returning it
+        // since we need the view rendered prior to 
+        // applying the timeago() function
+        View.prototype.render.call(this, data);
+
+        // apply the timeago() function to all data elements
+        this._element.find('abbr.timeago').timeago();
+
+        // return this to allow method chaining
+        return this;
+    }
+```
+
+By now, you should be able to run the application and see the effect, so, try it out. 
+
+We're almost done here. You just need to apply this changes to `IssueDetailsView` also. It should be pretty straightforward to you now, so please do so. 
+
+## Markdown Renderer
+
+With this tool applied to issues details, we'll be able to see markdown notation compiled to HTML notation. If you run the application now, you'll see that markdown is not recognized as HTMl being shown as plain text. To give a better style of that tags, let's install this tool:
+
+```
+bower install marked --save
+```
+
+So, for the tool to be available throughout the application, we have to add the dependency in the `app/loader`. So it comes:
+
+```js
+paths: {
+        ...
+        'jquery-timeago': '../components/jquery-timeago/jquery.timeago',
+        'marked': '../components/marked/lib/marked'
+    },
+```
+
+Now, we're going to apply this tool to all texts in the `IssueDetailsView`. 
+This means that all texts with markdown tags will be converted into html thus being rendered normally in the browser. 
+
+```js
+    /**
+     * {@inheritDoc}
+     */
+    render: function (data) {
+        this._element.removeClass('loading error');
+
+        View.prototype.render.call(this, data);
+
+        // apply the tool to all body texts (comments included)
+        $('div .body').each(function () {
+            $(this).html(marked($(this).html()));
+        });
+
+        this._element.find('abbr.timeago').timeago();
+
+        return this;
+    }
+```
