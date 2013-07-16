@@ -14,7 +14,7 @@ app/
     states.js              // states to routes configuration
     bootstrap.js           // the script that boots the application
     loader.js              // file that setups the AMD loader
-components/                // external dependencies, managed by Bower
+bower_components/          // external dependencies, managed by Bower
     spoonjs
     events-emitter
     ...
