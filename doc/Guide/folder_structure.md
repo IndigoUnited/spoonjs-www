@@ -94,4 +94,4 @@ The correlation between the module purpose and the file structure makes it reall
 
 Still, when dealing with reusable modules, that could show up in several places in the application, you can place the module wherever you feel the right place is. Ultimately, this is a developer's choice.
 
-Since there is a clear separation of responsibilities, some modules might end up with some option that they don't know how to handle, and need to delegate that responsibility to another module. Since a module do not hold references to its parent, it upcast events, delegating the responsibility to its parent, or even broadcast events, and the whole project will listen to it.
+Since there is a clear separation of responsibilities, some modules might end up with some option that they don't know how to handle, and need to delegate that responsibility to another module. Considering modules do not implicitly hold a reference to their parent, they upcast events, delegating the responsibility to their parent, or even broadcast events, and the whole project will listen to it.

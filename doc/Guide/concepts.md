@@ -49,7 +49,7 @@ Keeping this is mind, `SpoonJS` does not offer a solution for the Model in its c
 
 ## Events
 
-There are to type of events in: DOM events and hierarchy events. The DOM events are managed by views and possibly mapped to meaningful hierarchy events.
+There are two types of events in: DOM events and hierarchy events. The DOM events are managed by views and possibly mapped to meaningful hierarchy events.
 
 For the hierarchy events, there are two different models of events:
 
@@ -78,7 +78,7 @@ The application state can be described by a simple string in the format `/articl
 - `show(172)` actually stands for the `show` state, with a parameter. When declaring a state, you can provide a list of parameters, and these get fed into the handler.
 
 Another aspect that is usually tightly associated with state management is routing. `SpoonJS` offers a simple routing mechanism that maps the requested URLs to their respective state, and vice-versa. This routing mechanism gives the user full flexibility on what pattern matches a state.
-Since your application only know states, you can add the state to routes mapping when you feel opportune to do so.
+Since your application only knows states, you can add the state to routes mapping when you feel opportune to do so.
 
 
 ## Services
