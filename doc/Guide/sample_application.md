@@ -47,7 +47,7 @@ To ease out the process of having some styles and UI components, we will include
     //..
     paths: {
         //..
-        'bootstrap': '../components/components-bootstrap'
+        'bootstrap': '../bower_components/components-bootstrap'
     },
     shim: {
         //..
