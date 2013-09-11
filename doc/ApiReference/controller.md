@@ -91,7 +91,7 @@ Sets the current state.
 If the state is the same, nothing happens.
 
 When the `state` is a string, you can reference ancestors states relatively and absolutely.   
-Note that this will work work if those states are registered in the `StateRegistry`.
+Note that this will work work if those states are registered in the `StateRegistry`.   
 Read the example below.
 
 **Parameters**
