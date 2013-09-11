@@ -90,14 +90,15 @@ State - The state.
 Sets the current state.   
 If the state is the same, nothing happens.
 
-When the `state` is a string, you can reference ancestors states relatively and absolutely.
+When the `state` is a string, you can reference ancestors states relatively and absolutely.   
+Note that this will work work if those states are registered in the `StateRegistry`.
 Read the example below.
 
 **Parameters**
 
 |                    |          |                                                              |
 | ------------------ | -------- | ------------------------------------------------------------ |
-| state (optional)   | ...mixed | The state name, the state parameter bag or a state instance. |
+| state (optional)   | String   | The state name.                                              |
 | params (optional)  | Object   | The state params to be used if the state is a string.        |
 | options (optional) | Object   | The options.                                                 |
 
