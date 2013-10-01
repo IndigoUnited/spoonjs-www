@@ -8,7 +8,7 @@
     "require-css": "*",
     "almond": "~0.2",
     "jquery": "~1.10",
-    "mout": "~0.6.0",
+    "mout": "~0.7.0",
     "normalize-css": "~2.1",
     "doT": "~0.2",
     "jquery.scrollTo": "~1.4",

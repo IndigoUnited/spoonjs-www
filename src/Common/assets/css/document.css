@@ -4,9 +4,8 @@
 
 .document .content-left {
     width: 80%;
-    min-width: 700px;
     min-height: 500px;
-    float: left;
+    display: inline-block;
     /*background: yellow;*/
 }
 
@@ -15,7 +14,7 @@
     min-width: 180px;
     min-height: 500px;
     /*background: green;*/
-    float: right;
+    display: inline-block;
     font-size: 13px;
     position: relative;
     z-index: 10;
@@ -138,4 +137,26 @@
     left: 50%;
     margin-top: -3px;
     margin-left: -5px;
+}
+
+.document img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 680px) {
+    .document {
+        margin-left: 30px;
+    }
+
+    .document .content-right {
+        display: none;
+    }
+    .document .content-left {
+        width: 100%;
+    }
+
+    .document pre {
+        padding: 10px;
+    }
 }

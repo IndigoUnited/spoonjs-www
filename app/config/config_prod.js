@@ -4,7 +4,7 @@ define(['./config', 'mout/object/merge'], function (config, merge) {
 
     return merge(config, {
         env: 'prod',
-        version: 0,
+        version: 2,
 
         // Address overrides
         address: {

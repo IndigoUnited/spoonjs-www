@@ -11,7 +11,7 @@ define([
     return Controller.extend({
         $name: 'ApplicationController',
 
-        _defaultState: 'home',
+        _defaultState: 'guide',
         _states: {
             'home': '_homeState',
             'api': '_apiState',

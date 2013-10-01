@@ -1,4 +1,4 @@
-/*jshint node:true, es5:true, regexp:false*/
+/*jshint node:true, regexp:false*/
 
 'use strict';
 
@@ -100,7 +100,7 @@ module.exports = function (task) {
             mainConfigFile: opts.tempDir + '/app/loader.js',       // Include the main configuration file
             baseUrl: opts.tempDir + '/src',                        // Point to the tmp folder
             // r.js specific settings
-            name: '../bower_components/almond/almond',                      // Use almond
+            name: '../bower_components/requirejs/require',         // Include the loader
             include: ['../app/loader', '../app/bootstrap'],
             out: opts.tempDir + '/app.js',
             has: {
@@ -108,7 +108,7 @@ module.exports = function (task) {
             },
             optimize: 'none',
             separateCSS: true,
-            stubModules: ['has', 'text', 'css', 'css/css', 'css/normalize']
+            stubModules: ['has']
         }, function (log) {
             ctx.log.info(log);
             next();

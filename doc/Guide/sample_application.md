@@ -986,9 +986,9 @@ This happened precisely because the inner state depends on those two parameters 
 
 **NOTE:** As you can recall, in 'Content/assets/tmpl/content.html' when defining the state urls, you did not define any additional parameters to that states, and you shouldn't either. It's up to `SpoonJS` framework to handle the state and understand that, somewhere up in the hierarchy, there are parameters that need to be added to the state (and are part of it) regardless you map or not the state to an URL representation.
 
-# Extras
+## Extras
 
-## Date Plugin
+### Date Plugin
 
 As you could see when you ran the application, the date fields were not very user friendly, so now we're placing a possible solution to overcome that situation. For this example application we'll be using a jquery plugin called `timeago` that will allow us to see dates as time references. e.g. `1 minute ago`. More information can be seen here: [http://timeago.yarp.com/](http://timeago.yarp.com/)
 
@@ -1102,7 +1102,7 @@ By now, you should be able to run the application and see the effect, so, try it
 
 We're almost done here. You just need to apply this changes to `IssueDetailsView` also. It should be pretty straightforward to you now, so please do so. 
 
-## Markdown Renderer
+### Markdown Renderer
 
 With this tool applied to issues details, we'll be able to see markdown notation compiled to HTML notation. If you run the application now, you'll see that markdown is not recognized as HTMl being shown as plain text. To give a better style of that tags, let's install this tool:
 
