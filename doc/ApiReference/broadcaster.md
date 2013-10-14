@@ -90,4 +90,4 @@ Emits a broadcast event.
 
 **Returns**
 
-Broadcaster - The instance itself to allow chaining.
+Boolean - True if the event was handled by at least one listener, false otherwise.

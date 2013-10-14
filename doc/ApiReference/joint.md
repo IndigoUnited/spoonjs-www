@@ -18,7 +18,7 @@ Since this class is `abstract`, it's meant to be extended and not used directly.
 
 `public method` _on(event, fn, [context])_
 
-Adds a listener for an upcast or broadcast event.   
+Adds a listener for an upcast, downcast or broadcast event.   
 Duplicate listeners for the same event will be discarded.
 
 **Parameters**
@@ -51,7 +51,7 @@ myView.on('save', function () {
 
 `public method` _once(event, fn, [context])_
 
-Adds a one time listener for an upcast or broadcast event.   
+Adds a one time listener for an upcast, downcast or broadcast event.   
 Duplicate listeners for the same event will be discarded.
 
 **Parameters**
@@ -165,7 +165,7 @@ Joint - The instance itself to allow chaining.
 
 `protected method` __upcast(event, [args])_
 
-Fires an event upwards the chain.
+Boolean - True if the event was handled by at least one listener, false otherwise.
 
 **Parameters**:
 
@@ -180,13 +180,44 @@ Joint - The instance itself to allow chaining.
 
 
 ```js
-var MyView = Controller.extend({
+var MyView = View.extend({
     _events: {
         'click .btn': '_onBtnClick'
     },
 
     _onBtnClick: function () {
         this._upcast('activate', 'foo', 'bar');
+    }
+});
+```
+
+
+## joint._downcast()
+
+`protected method` _downcast(event, [args])_
+
+Fires an event downwards the chain.
+
+**Parameters**:
+
+|                 |          |                                             |
+| --------------- | -------- | ------------------------------------------- |
+| event           | String   | The event name.                             |
+| args (optional) | ...mixed | The arguments to pass along with the event. |
+
+**Returns**
+
+Boolean - True if the event was handled by at least one listener, false otherwise.
+
+
+```js
+var MyView = View.extend({
+    _events: {
+        'click .btn': '_onBtnClick'
+    },
+
+    _onBtnClick: function () {
+        this._downcast('sizechange');
     }
 });
 ```
@@ -207,7 +238,7 @@ Fires an event to all the joints.
 
 **Returns**
 
-Joint - The instance itself to allow chaining.
+Boolean - True if the event was handled by at least one listener, false otherwise.
 
 Please read the [_upcast()]() for an usage example.
 

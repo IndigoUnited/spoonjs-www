@@ -111,6 +111,18 @@ Returns the view's element.
 Element - The view's element.
 
 
+## view.setElement()
+
+`public method` _setElement(element)_
+
+Changes the view's element.
+The old element will be removed.
+
+**Returns**
+
+View - The instance itself to allow chaining.
+
+
 ## view.appendTo()
 
 `public method` _appendTo(target, [within])_
