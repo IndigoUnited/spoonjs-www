@@ -18,19 +18,19 @@
     color: #353535;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 25px;
-    float: left;
+    position: absolute;
+    left: 25px;
     -webkit-font-smoothing: antialiased;
     line-height: 55px;
     height: 55px;
-    margin-left: 25px;
 }
 
 .app-header ul {
-    float: right;
+    position: absolute;
+    right: 30px;
     list-style: none;
     line-height: 55px;
     margin: 0;
-    margin-right: 30px;
 }
 
 .app-header li {
@@ -66,4 +66,10 @@
 }
 .app-header li:last-child:after {
     content: none;
+}
+
+@media (max-width: 680px) {
+    .app-header .spoon-logo {
+        font-size: 18px;
+    }
 }

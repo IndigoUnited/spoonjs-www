@@ -77,6 +77,12 @@
     right: 0;
 }
 
+.document code {
+    /* Needed for iOS */
+    white-space: normal;
+    word-wrap: break-word;
+}
+
 .document p code {
     background: #f8f8f8;
     border: 1px solid #eaeaea;
@@ -93,13 +99,17 @@
     box-shadow: 0 1px 3px 0 #eee;
     border-radius: 3px;
     font-size: 12px;
+
+    overflow: auto;
 }
 
 .document pre code {
     font-family: Consolas, 'Liberation Mono', Courier, monospace;
     font-size: 1.1em;
     width: 100%;
-    overflow: auto;
+
+    white-space: pre;
+    word-wrap: normal;
 }
 
 .document table ~ pre {
@@ -158,5 +168,10 @@
 
     .document pre {
         padding: 10px;
+    }
+
+    .document pre code {
+        font-family: Consolas, 'Liberation Mono', Courier, monospace;
+        font-size: 12px;
     }
 }
