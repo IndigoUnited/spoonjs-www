@@ -1,13 +1,13 @@
 <ul>
     {{~ it.topics :topic }}
     <li class="topic_{{! it.generateTopicClass(topic) }}">
-        <a href="{{! it.$url('topic', { name: it.normalizeTopic(topic) }) }}" data-url-force="true">{{! topic }}</a>
+        <a href="{{! this.url('topic', { name: it.normalizeTopic(topic) }) }}" data-url-force="true">{{! topic }}</a>
         <ul>
             {{~ it.subtopics[topic] :subtopic }}
             {{ var subtopicName = subtopic.split('.'); }}
             {{ subtopicName = subtopicName[subtopicName.length - 1]; }}
             <li class="topic_{{! it.generateTopicClass(subtopic) }}">
-                <a href="{{! it.$url('topic', { name: it.normalizeTopic(subtopic) }) }}" data-force="true">{{! subtopicName }}</a>
+                <a href="{{! this.url('topic', { name: it.normalizeTopic(subtopic) }) }}" data-force="true">{{! subtopicName }}</a>
             </li>
             {{~ }}
         </ul>

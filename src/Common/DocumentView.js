@@ -158,13 +158,13 @@ define([
             });
 
             // Render the menu
-            menuData = this._fillHelpers({
+            menuData = {
                 topics: topics,
                 subtopics: subtopics,
                 normalizeTopic: this._normalizeTopic,
                 generateTopicClass: this._generateTopicClass
-            });
-            this._rightEl.append(this._topicsTemplate(menuData));
+            };
+            this._rightEl.append(this._renderTemplate(this._topicsTemplate, menuData));
         },
 
         /**

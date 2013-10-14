@@ -13,8 +13,5 @@
     "doT": "~0.2",
     "jquery.scrollTo": "~1.4",
     "rainbow": "~1.1"
-  },
-  "resolutions": {
-    "jquery": "~1.10"
   }
 }
