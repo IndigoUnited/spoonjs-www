@@ -227,7 +227,7 @@ var MyView = View.extend({
 
 ## joint._downcast()
 
-`protected method` _downcast(event, [args])_
+`protected method` *_downcast(event, [args])*
 
 Fires an event downwards the chain. If a node listens to it, the propagation will stop for that tree.
 

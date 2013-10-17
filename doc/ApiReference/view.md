@@ -66,7 +66,7 @@ _element: 'div#main-view[data-foo="bar"]'
 
 ## view._template
 
-`protected property` _template
+`protected property` *_template*
 
 A function that generates an HTML string or an Element.   
 If set, the `render()` method will call this function with the supplied data.   
@@ -84,7 +84,7 @@ _template: doT.template('<div>{{=name}}</div>')
 
 ## view._events
 
-`protected property` _events
+`protected property` *_events*
 
 An object where keys are event selectors and values the functions to run when the event occurs.
 
