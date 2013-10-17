@@ -50,7 +50,7 @@ define(['path/to/MyView'], function (MyView) {
 
 ## view._element
 
-`protected property` _element
+`protected property` *_element*
 
 A CSS selector used to build an element for the view in case one is not passed to the constructor.   
 Defaults to `div`.
@@ -224,7 +224,7 @@ View - The instance itself to allow chaining.
 
 ## view._listen()
 
-`protected method` __listen(events)_
+`protected method` *_listen(events)*
 
 Listen to a set of events.
 
@@ -273,7 +273,7 @@ define(['spoon/View'], function (MyView) {
 
 ## view._unlisten()
 
-`protected method` __unlisten(events)_
+`protected method` *_unlisten(events)*
 
 Unlistens to events.   
 Note that the exact same object reference passed to [_listen()]() must be used.

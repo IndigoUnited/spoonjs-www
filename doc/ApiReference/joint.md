@@ -21,6 +21,8 @@ Since this class is `abstract`, it's meant to be extended and not used directly.
 Adds a listener for an upcast, downcast or broadcast event.   
 Duplicate listeners for the same event will be discarded.
 
+Namespaces are supported, please read the [events-emitter](https://github.com/IndigoUnited/events-emitter#offevent-fn-context) documentation for more information.
+
 **Parameters**
 
 |                    |          |                                                                             |
@@ -118,7 +120,7 @@ Internally calls `_onDestroy()` only once, even on consecutive calls to `destroy
 
 ## joint._link()
 
-`protected method` __link(joint)_
+`protected method` *_link(joint)*
 
 Creates a link between this joint and another one.   
 Once linked, descendants events flow upwards the hierarchy chain.
@@ -146,7 +148,7 @@ var MyController = Controller.extend({
 
 ## joint._unlink()
 
-`protected method` __unlink(joint)_
+`protected method` *_unlink(joint)_*
 
 Removes a previously created link between this joint and another one.
 
@@ -161,11 +163,11 @@ Removes a previously created link between this joint and another one.
 Joint - The instance itself to allow chaining.
 
 
-## joint._upcast()
+## joint._emit()
 
-`protected method` __upcast(event, [args])_
+`protected method` *_emit(event, [args])*
 
-Boolean - True if the event was handled by at least one listener, false otherwise.
+Emits an event.
 
 **Parameters**:
 
@@ -176,7 +178,7 @@ Boolean - True if the event was handled by at least one listener, false otherwis
 
 **Returns**
 
-Joint - The instance itself to allow chaining.
+Boolean - True if the event was handled by at least one listener, false otherwise.
 
 
 ```js
@@ -186,7 +188,38 @@ var MyView = View.extend({
     },
 
     _onBtnClick: function () {
-        this._upcast('activate', 'foo', 'bar');
+        this._emit('activate', 'foo', 'bar');
+    }
+});
+```
+
+
+## joint._upcast()
+
+`protected method` *_upcast(event, [args])*
+
+Emits an event upwards the tree until a node listens to it.
+
+**Parameters**:
+
+|                 |          |                                             |
+| --------------- | -------- | ------------------------------------------- |
+| event           | String   | The event name.                             |
+| args (optional) | ...mixed | The arguments to pass along with the event. |
+
+**Returns**
+
+Boolean - True if the event was handled by at least one listener, false otherwise.
+
+
+```js
+var MyView = View.extend({
+    _events: {
+        'click .btn': '_onBtnClick'
+    },
+
+    _onBtnClick: function () {
+        this._emit('activate', 'foo', 'bar');
     }
 });
 ```
@@ -196,7 +229,7 @@ var MyView = View.extend({
 
 `protected method` _downcast(event, [args])_
 
-Fires an event downwards the chain.
+Fires an event downwards the chain. If a node listens to it, the propagation will stop for that tree.
 
 **Parameters**:
 
@@ -225,7 +258,7 @@ var MyView = View.extend({
 
 ## joint._broadcast()
 
-`protected method` __broadcast(event, [args])_
+`protected method` *_broadcast(event, [args])*
 
 Fires an event to all the joints.
 
@@ -245,7 +278,7 @@ Please read the [_upcast()]() for an usage example.
 
 ## joint._onDestroy()
 
-`protected method` __onDestroy()_
+`protected method` *_onDestroy()*
 
 Method called by `destroy()`.   
 Subclasses should override this method to release additional resources.   

@@ -44,7 +44,7 @@ define(['path/to/MyController'], function (MyController) {
 
 ## controller._states
 
-`protected property` _states
+`protected property` *_states*
 
 An object where keys are states and values the functions to run for that state.
 
@@ -62,7 +62,7 @@ _states: {
 
 ## controller._defaultState
 
-`protected property` _defaultState
+`protected property` *_defaultState*
 
 The default state name of the controller, as a `string`.   
 Defaults to `index` if the `index` state is declared in `_states.
