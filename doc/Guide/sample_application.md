@@ -336,14 +336,14 @@ Next lets add some HTML and CSS in the `ContentView` template and css files:
 ```html
 <div class="left">
     <div class="back">
-        <a class="btn btn-small" href="{{! it.$url('/home') }}"><i class="icon-chevron-left"></i> Back</a>
+        <a class="btn btn-small" href="{{! this.url('/home') }}"><i class="icon-chevron-left"></i> Back</a>
     </div>
     <ul class="nav nav-list">
         <li class="nav-header">repo-browser</li>
-        <li class="code"><a href="{{! it.$url('code') }}">Code</a></li>
-        <li class="issues"><a href="{{! it.$url('issues') }}">Issues</a></li>
-        <li class="tags"><a href="{{! it.$url('tags') }}">Tags</a></li>
-        <li class="history"><a href="{{! it.$url('history') }}">History</a></li>
+        <li class="code"><a href="{{! this.url('code') }}">Code</a></li>
+        <li class="issues"><a href="{{! this.url('issues') }}">Issues</a></li>
+        <li class="tags"><a href="{{! this.url('tags') }}">Tags</a></li>
+        <li class="history"><a href="{{! this.url('history') }}">History</a></li>
     </ul>
 </div>
 <div class="right"></div>
@@ -611,7 +611,7 @@ define([
 
 ```html
 <ul class="breadcrumb">
-  <li><a href="{{! it.$url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
+  <li><a href="{{! this.url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
   <li class="active">Issues</li>
 </ul>
 
@@ -619,7 +619,7 @@ define([
     {{~it.issues :issue}}
     <li class="clearfix">
         <div class="main-info">
-            <div class="title"><a href="{{! it.$url('details', { nr: issue.number }) }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
+            <div class="title"><a href="{{! this.url('details', { nr: issue.number }) }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
             <div class="by">Open by <span class="user">{{! issue.user.login }}</span> {{! issue.created_at }}</div>
         </div>
         <div class="labels">
@@ -804,8 +804,8 @@ define([
 
 ```html
 <ul class="breadcrumb">
-  <li><a href="{{! it.$url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
-  <li><a href="{{! it.$url('index') }}">Issues</a> <span class="divider">/</span></li>
+  <li><a href="{{! this.url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
+  <li><a href="{{! this.url('index') }}">Issues</a> <span class="divider">/</span></li>
   <li class="active">{{! it.issue.title}}</li>
 </ul>
 
@@ -814,7 +814,7 @@ define([
     <div class="issue-wrapper">
         <div class="clearfix">
             <div class="main-info">
-                <div class="title"><a href="{{! it.$url('details', { nr: it.issue.number }) }}">{{! it.issue.title }}</a> <span class="nr">(#{{! it.issue.number }})</span></div>
+                <div class="title"><a href="{{! this.url('details', { nr: it.issue.number }) }}">{{! it.issue.title }}</a> <span class="nr">(#{{! it.issue.number }})</span></div>
                 <div class="by">Open by <span class="user">{{! it.issue.user.login }}</span> {{! it.issue.created_at }}</div>
             </div>
             {{ if (it.issue.labels.length) { }}}
@@ -1034,7 +1034,7 @@ Now let's put things to work. We'll start by the issues list. So the new html fo
 
 ```html
 <ul class="breadcrumb">
-  <li><a href="{{! it.$url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
+  <li><a href="{{! this.url('../code') }}">{{! it.org }}/{{! it.repo }}</a> <span class="divider">/</span></li>
   <li class="active">Issues</li>
 </ul>
 
@@ -1042,7 +1042,7 @@ Now let's put things to work. We'll start by the issues list. So the new html fo
     {{~it.issues :issue}}
     <li class="clearfix">
         <div class="main-info">
-            <div class="title"><a href="{{! it.$url('details', { nr: issue.number }) }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
+            <div class="title"><a href="{{! this.url('details', { nr: issue.number }) }}">{{! issue.title }}</a> <span class="nr">(#{{! issue.number }})</span></div>
             <div class="by">Open by <span class="user">{{! issue.user.login }}</span> <abbr class="timeago" title="{{! issue.created_at }}">{{! issue.created_at }}</abbr></div>
         </div>
         <div class="labels">
