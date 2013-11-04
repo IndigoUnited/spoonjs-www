@@ -203,7 +203,7 @@ _innerState: function (state) {
 In the `inner` state, the user has the ability to browse the repository, checking out the code, issues, tags, etc.
 
 Since this part of the application is somewhat complex, lets do it in a separate module named `Content`.  
-To create a module, you can also use the `CLI` by executing `spoon module create <name>`. For the name field, type in `Content`. The generated module comes with a controller, a view and a few assets.
+To create a module, you can also use the `CLI` by executing `spoon module create <name>`. For the name field, type in `src/Content`. The generated module comes with a controller, a view and a few assets.
 
 If you analyse the second mockup carefully, you can identify two separate areas: the menu on the left and the current menu item being shown on the right.
 We can easily structure our app thanks to the hierarchical states. In this case, our generated `ContentController` will have a state for each menu on the left.
@@ -214,10 +214,10 @@ In each state, we must ensure that:
 
 The content shown on the right can also be somewhat complex, therefore we will generate a separate module for each one:
 
-- `spoon module create Content/Code`
-- `spoon module create Content/Issues`
-- `spoon module create Content/Tags`
-- `spoon module create Content/History`
+- `spoon module create src/Content/Code`
+- `spoon module create src/Content/Issues`
+- `spoon module create src/Content/Tags`
+- `spoon module create src/Content/History`
 
 Now lets setup the `ContentController` to do what has been described above:
 
@@ -700,7 +700,7 @@ The gif is located within the `img` folder of the module (repo-browser/src/Conte
 ## Issues details
 
 The `details` state is very similar to what's being done in the `index` state in terms of flow. The only thing that changes is the GitHub API request and the view being rendered.
-As such, we will need a new view that will be responsible to render the issue details. To create a view, you can use the `CLI` by executing `spoon view create <name>`. For the name field, type in `Content/Issues/IssueDetails`. This will generate the view as well as its `template` and `css` file.
+As such, we will need a new view that will be responsible to render the issue details. To create a view, you can use the `CLI` by executing `spoon view create <name>`. For the name field, type in `src/Content/Issues/IssueDetails`. This will generate the view as well as its `template` and `css` file.
 
 Let's start by creating the `details` state in the `IssuesController`:
 
