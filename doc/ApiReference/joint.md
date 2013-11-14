@@ -108,6 +108,17 @@ var MyController = Controller.extend({
 ```
 
 
+## joint.isDestroyed()
+
+`public method` _destroy()_
+
+Checks if the instance is destroyed.
+
+**Returns**
+
+Boolean - True if it is destroyed, false otherwise
+
+
 ## joint.destroy()
 
 `public method` _destroy()_
