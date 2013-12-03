@@ -70,6 +70,8 @@ _element: 'div#main-view[data-foo="bar"]'
 
 A function that generates an HTML string or an Element.   
 If set, the `render()` method will call this function with the supplied data.   
+Can also be a string with HTML.
+
 Defaults to `null`.
 
 
