@@ -62,7 +62,7 @@ This function is handy to kick-off the state registry.
 
 **Returns**
 
-StateRegistry - The instance itself to allow chaining.
+Boolean - True if the route matched a state, false otherwise
 
 
 ## stateRegistry.register()
