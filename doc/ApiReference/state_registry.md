@@ -51,6 +51,7 @@ Parses a given route.
 If no route is passed, the current address value is used.
 If a state is found for the route and is different from the current one, a transition
 will occur and the change event will be emitted.
+If not state is found, a unknown event will be fired instead.
 
 This function is handy to kick-off the state registry.
 
