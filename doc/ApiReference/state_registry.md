@@ -62,7 +62,7 @@ This function is handy to kick-off the state registry.
 
 **Returns**
 
-Boolean - True if the route matched a state, false otherwise
+Boolean - True if the state changed, false otherwise
 
 
 ## stateRegistry.register()
