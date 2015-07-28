@@ -46,7 +46,8 @@ define(['path/to/MyController'], function (MyController) {
 
 `protected property` *_states*
 
-An object where keys are states and values the functions to run for that state.
+An object where keys are states and values the functions to run for that state.   
+The values can be actual inline functions or strings that will be mapped to the instance functions.
 
 ```js
 _states: {
@@ -58,6 +59,8 @@ _states: {
     }
 }
 ```
+
+If the `name` is prefixed with a `!` it will be marked as internal.
 
 
 ## controller._defaultState
